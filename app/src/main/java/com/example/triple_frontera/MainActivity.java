@@ -20,9 +20,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         username = (EditText)findViewById(R.id.usuario);
         password = (EditText)findViewById(R.id.password);
+
+        // BORRAR ESTO ES PARA DEBUG
+        Toast.makeText(getApplicationContext(), "Login", Toast.LENGTH_SHORT).show();
+        Intent myIntent = new Intent(MainActivity.this, Lugar_de_trabajo.class);
+        MainActivity.this.startActivity(myIntent);
     }
 
-    public void Continuar(View view){
+    public void IniciarSesion(View view){
         String user = username.getText().toString();
         String pass = password.getText().toString();
         if(user.equals("") || pass.equals("")){
@@ -33,8 +38,6 @@ public class MainActivity extends AppCompatActivity {
         if(BaseDeDatos.Login(user, pass)){
             Toast.makeText(getApplicationContext(), "Login", Toast.LENGTH_SHORT).show();
             Intent myIntent = new Intent(MainActivity.this, Lugar_de_trabajo.class);
-
-            //myIntent.putExtra("idEdificio", idEdificio); //Optional parameters
             MainActivity.this.startActivity(myIntent);
         }
         else{

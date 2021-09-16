@@ -2,7 +2,9 @@ package com.example.triple_frontera;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
@@ -23,12 +25,15 @@ public class Lugar_de_trabajo extends AppCompatActivity {
         paraje = (Spinner) findViewById(R.id.spinner_paraje);
 
         ActualizarSpinner(BaseDeDatos.TIPO_PAISES);
+
+        // BORRAR ESTO ES PARA DEBUG
+        Toast.makeText(getApplicationContext(), "continuar", Toast.LENGTH_SHORT).show();
+        Intent myIntent = new Intent(Lugar_de_trabajo.this, ListadoPacientes.class);
+        Lugar_de_trabajo.this.startActivity(myIntent);
+        return;
+        //
     }
 
-
-    private void setAdapter(ArrayAdapter<String> adapter_datos, int tipo) {
-        
-    }
 
     private void ActualizarSpinner(int tipo, int id){
         String[] datos;
@@ -54,11 +59,12 @@ public class Lugar_de_trabajo extends AppCompatActivity {
                 public void onItemSelected(AdapterView<?> spn, android.view.View v, int posicion, long id) {
                     Toast.makeText(spn.getContext(), "Has seleccionado " + spn.getItemAtPosition(posicion).toString(),Toast.LENGTH_LONG).show();
                     if(tipo == BaseDeDatos.TIPO_PAISES){
-                        ActualizarSpinner(BaseDeDatos.TIPO_AREAS_OPERATIVAS, posicion);
-                        ActualizarSpinner(BaseDeDatos.TIPO_PARAJES, posicion);
+                        int id_pais = posicion;
+                        ActualizarSpinner(BaseDeDatos.TIPO_AREAS_OPERATIVAS, id_pais);
                     }
                     else if(tipo == BaseDeDatos.TIPO_AREAS_OPERATIVAS){
-                        ActualizarSpinner(BaseDeDatos.TIPO_PARAJES, posicion);
+                        int id_areas_operativas = BaseDeDatos.getID_area_operativa(spn.getItemAtPosition(posicion).toString());
+                        ActualizarSpinner(BaseDeDatos.TIPO_PARAJES, id_areas_operativas);
                     }
 
                 }
@@ -69,6 +75,15 @@ public class Lugar_de_trabajo extends AppCompatActivity {
 
     private void ActualizarSpinner(int tipo){
         ActualizarSpinner(tipo, 0);
+    }
+
+
+    public void Continuar(View view){
+        Toast.makeText(getApplicationContext(), "Continuo a listado pacientes", Toast.LENGTH_SHORT).show();
+        //Intent myIntent = new Intent(MainActivity.this, Lugar_de_trabajo.class);
+
+        //myIntent.putExtra("idEdificio", idEdificio); //Optional parameters
+        //MainActivity.this.startActivity(myIntent);
     }
     
 }

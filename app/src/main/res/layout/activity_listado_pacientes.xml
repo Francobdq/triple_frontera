@@ -1,0 +1,516 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ListadoPacientes">
+
+    <EditText
+        android:id="@+id/buscar_paciente"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        android:text="Name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Header_tv" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_sort_by_size"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <TextView
+        android:id="@+id/Header_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Listado de Pacientes"
+        app:layout_constraintStart_toEndOf="@+id/imageButton"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ListView
+        android:id="@+id/lista_pacientes"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:entries="@android:array/emailAddressTypes"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buscar_paciente">
+
+    </ListView>
+
+    <ImageButton
+        android:id="@+id/imageButton2"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:onClick="irAEmbarazada"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_edit"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <ImageButton
+        android:id="@+id/imageButton3"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/imageButton2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_view"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <TextView
+        android:id="@+id/nombre_header_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="34dp"
+        android:text="Nombre, Apellido"
+        app:layout_constraintEnd_toStartOf="@+id/imageButton3"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/datos_de_identidad_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="13dp"
+        android:layout_marginEnd="32dp"
+        android:text="Datos de identidad"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nombre_header_tv" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginStart="16dp"
+        app:layout_constraintStart_toEndOf="@+id/lista_pacientes"
+        app:srcCompat="@android:drawable/editbox_dropdown_light_frame"
+        tools:layout_editor_absoluteY="25dp" />
+
+    <TextView
+        android:id="@+id/control_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:text="Controles"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout3" />
+
+    <Spinner
+        android:id="@+id/sp_controles"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/control_tv"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <TableLayout
+        android:id="@+id/tableLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/sp_controles">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/estado_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="6dip"
+                android:text="Estado" />
+
+            <TextView
+                android:id="@+id/tb_estado_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="6dip"
+                android:text="Puerpera" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/edad_gestacional_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="6dip"
+                android:text="Edad gestacional" />
+
+            <TextView
+                android:id="@+id/tb_edad_gestacional_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="6dip"
+                android:text="32" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/eco_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="6dip"
+                android:text="ECO" />
+
+            <TextView
+                android:id="@+id/tb_eco_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="6dip"
+                android:text="Normal" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/fpp_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="6dip"
+                android:text="FPP" />
+
+            <TextView
+                android:id="@+id/tb_fpp_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="6dip"
+                android:text="22/12/2021" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/control_clinico_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="6dip"
+                android:text="Control clinico" />
+
+            <TextView
+                android:id="@+id/tb_control_clinico_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="6dip"
+                android:text="Normal" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/inmunizaciones_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:padding="6dip"
+                android:text="Inmunizaciones" />
+
+        </TableRow>
+
+    </TableLayout>
+
+    <TableLayout
+        android:id="@+id/tableLayout2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sp_controles">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/laboratorio_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="6dip"
+                android:text="Laboratorio" />
+
+            <TextView
+                android:id="@+id/estado_lab_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="6dip"
+                android:text="Estado" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/sifilis_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="6dip"
+                android:text="SIFILIS" />
+
+            <TextView
+                android:id="@+id/tb_sifilis_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="6dip"
+                android:text="Solicitado" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/hiv_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="6dip"
+                android:text="HIV" />
+
+            <TextView
+                android:id="@+id/tb_hiv_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="6dip"
+                android:text="Negativo" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/chagas_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="6dip"
+                android:text="CHAGAS" />
+
+            <TextView
+                android:id="@+id/tb_chagas_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="6dip"
+                android:text="POSITIVO" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/vhb_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="6dip"
+                android:text="VHB" />
+
+            <TextView
+                android:id="@+id/tb_vhb_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="6dip"
+                android:text="Negativo" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/hb_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="6dip"
+                android:text="HB" />
+
+            <TextView
+                android:id="@+id/tb_hb_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="6dip"
+                android:text="10" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/glucemia_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="6dip"
+                android:text="GLUCEMIA" />
+
+            <TextView
+                android:id="@+id/tb_glucemia_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="6dip"
+                android:text="81" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:id="@+id/grupo_y_factor_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="6dip"
+                android:text="Grupo y factor" />
+
+            <TextView
+                android:id="@+id/tb_grupo_y_factor_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="6dip"
+                android:text="+0" />
+        </TableRow>
+
+    </TableLayout>
+
+    <TableLayout
+        android:id="@+id/tableLayout3"
+        android:layout_width="474dp"
+        android:layout_height="110dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/datos_de_identidad_tv">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/di_nombre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nombre" />
+
+            <TextView
+                android:id="@+id/di_nombre_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Rogelia" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:id="@+id/di_apellidos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Apellidos" />
+
+            <TextView
+                android:id="@+id/di_apellidos_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Maza" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:id="@+id/tb_documento"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Documento" />
+
+            <TextView
+                android:id="@+id/di_documento_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="39538456" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fecha de Nacimiento" />
+
+            <TextView
+                android:id="@+id/di_fecha_de_nacimiento_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="07/10/1985 (35 años)" />
+        </TableRow>
+    </TableLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
