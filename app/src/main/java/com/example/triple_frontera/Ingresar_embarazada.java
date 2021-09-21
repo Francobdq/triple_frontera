@@ -1,11 +1,14 @@
 package com.example.triple_frontera;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -37,6 +40,24 @@ public class Ingresar_embarazada extends AppCompatActivity {
     ImageButton add_control, add_hijo;
 
     Button guardar;
+
+    // nuevo control
+    EditText et_nc_edad_gestacional;
+    RadioButton rb_nc_ecografia_si, rb_nc_ecografia_no;
+    RadioButton rb_nc_hpv_si, rb_nc_pap_si,rb_nc_a_gripal_si,rb_nc_tba_si;
+    RadioButton rb_nc_db_previa, rb_nc_db_colocada, rb_nc_vhb_previa, rb_nc_vhb_colocada;
+    RadioButton rb_nc_control_clinico_normal;
+    RadioButton rb_nc_sifilis_solicitado, rb_nc_sifilis_positivo, rb_nc_sifilis_negativo, rb_nc_hiv_solicitado, rb_nc_hiv_positivo, rb_nc_hiv_negativo,rb_nc_chagas_solicitado,rb_nc_chagas_positivo, rb_nc_chagas_negativo, rb_nc_vhb_solicitado, rb_nc_vhb_positivo, rb_nc_vhb_negativo, rb_nc_gas_solicitado, rb_nc_gas_positivo, rb_nc_gas_negativo;
+    RadioButton rb_nc_hb_solicitado, rb_nc_hb_resultado, rb_nc_glucemia_solicitado, rb_nc_glucemia_resultado, rb_nc_grupo_solicitado, rb_nc_grupo_resultado;
+    EditText et_nc_grupo_resultado, et_nc_glucemia_resultado, et_nc_hb_resultado;
+
+    /* 
+     * terminar la parte del guardado de los datos en nuevo control
+     * en ingresar embarazada hacer que sea arrastrable así se ve todo
+     * base de datos
+     * 
+    */
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,6 +161,98 @@ public class Ingresar_embarazada extends AppCompatActivity {
         guardar = (Button) findViewById(R.id.btn_guardar_embarazada);
     }
 
+
+    private void nuevoControl(){
+        AlertDialog.Builder alert = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
+
+        LayoutInflater inflater = getLayoutInflater();
+
+        View view = inflater.inflate(R.layout.control_dialog,null);
+
+        alert.setView(view);
+
+        AlertDialog dialog = alert.create();
+        dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        dialog.show();
+
+    }
+
+    private void nuevoHijo(){
+        AlertDialog.Builder alert = new AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert);
+
+        LayoutInflater inflater = getLayoutInflater();
+
+        View view = inflater.inflate(R.layout.hijo_dialog,null);
+
+        alert.setView(view);
+
+        AlertDialog dialog = alert.create();
+        dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        dialog.show();
+
+    }
+    private void actualizarComponentesNuevoControl(){
+        // et : edad gestacional
+        
+        et_nc_edad_gestacional = (EditText)findViewById(R.id.et_nc_edad_gestacional);
+        // rb [si, no]: ecografia
+        
+        rb_nc_ecografia_si = (RadioButton)findViewById(R.id.rb_nc_ecografia_si);
+        rb_nc_ecografia_no = (RadioButton)findViewById(R.id.rb_nc_ecografia_no);
+        // rb [si] : hpv, pap, a_gripal, tba
+        
+        rb_nc_hpv_si = (RadioButton)findViewById(R.id.rb_nc_hpv_si);
+        rb_nc_pap_si = (RadioButton)findViewById(R.id.rb_nc_pap_si);
+        rb_nc_a_gripal_si = (RadioButton)findViewById(R.id.rb_nc_a_gripal_si);
+        rb_nc_tba_si = (RadioButton)findViewById(R.id.rb_nc_tba_si);
+        // rb [previa, colocada] : db, vhb
+        
+        rb_nc_db_previa = (RadioButton)findViewById(R.id.rb_nc_db_previa);
+        rb_nc_db_colocada = (RadioButton)findViewById(R.id.rb_nc_db_colocada);
+        rb_nc_vhb_previa = (RadioButton)findViewById(R.id.rb_nc_vhb_previa);
+        rb_nc_vhb_colocada = (RadioButton)findViewById(R.id.rb_nc_vhb_colocada);
+        // rb [normal] : control_clinico
+        
+        rb_nc_control_clinico_normal = (RadioButton)findViewById(R.id.rb_nc_control_clinico_normal);
+        // rb [solicitado, positivo, negativo] : sifilis, hiv, chagas, vhb, gas
+        rb_nc_sifilis_solicitado = (RadioButton)findViewById(R.id.rb_nc_sifilis_solicitado);
+        rb_nc_sifilis_positivo = (RadioButton)findViewById(R.id.rb_nc_sifilis_positivo);
+        rb_nc_sifilis_negativo = (RadioButton)findViewById(R.id.rb_nc_sifilis_negativo);
+        rb_nc_hiv_solicitado = (RadioButton)findViewById(R.id.rb_nc_hiv_solicitado);
+        rb_nc_hiv_positivo = (RadioButton)findViewById(R.id.rb_nc_hiv_positivo);
+        rb_nc_hiv_negativo = (RadioButton)findViewById(R.id.rb_nc_hiv_negativo);
+        rb_nc_chagas_solicitado = (RadioButton)findViewById(R.id.rb_nc_chagas_solicitado);
+        rb_nc_chagas_positivo = (RadioButton)findViewById(R.id.rb_nc_chagas_positivo);
+        rb_nc_chagas_negativo = (RadioButton)findViewById(R.id.rb_nc_chagas_negativo);
+        rb_nc_vhb_solicitado = (RadioButton)findViewById(R.id.rb_nc_vhb_solicitado);
+        rb_nc_vhb_positivo = (RadioButton)findViewById(R.id.rb_nc_vhb_positivo);
+        rb_nc_vhb_negativo = (RadioButton)findViewById(R.id.rb_nc_vhb_negativo);
+        rb_nc_gas_solicitado = (RadioButton)findViewById(R.id.rb_nc_gas_solicitado);
+        rb_nc_gas_positivo = (RadioButton)findViewById(R.id.rb_nc_gas_positivo);
+        rb_nc_gas_negativo = (RadioButton)findViewById(R.id.rb_nc_gas_negativo);
+        // rb [solicitado, resultado] : hb, glucemia, grupo
+        
+        rb_nc_hb_solicitado = (RadioButton)findViewById(R.id.rb_nc_hb_solicitado);
+        rb_nc_hb_resultado = (RadioButton)findViewById(R.id.rb_nc_hb_resultado);
+        rb_nc_glucemia_solicitado = (RadioButton)findViewById(R.id.rb_nc_glucemia_solicitado);
+        rb_nc_glucemia_resultado = (RadioButton)findViewById(R.id.rb_nc_glucemia_resultado);
+        rb_nc_grupo_solicitado = (RadioButton)findViewById(R.id.rb_nc_grupo_solicitado);
+        rb_nc_grupo_resultado = (RadioButton)findViewById(R.id.rb_nc_grupo_resultado);
+        // et : grupo_resultado, glucemia_resultado, hb_resultado
+        
+        et_nc_grupo_resultado = (EditText)findViewById(R.id.et_nc_grupo_resultado);
+        et_nc_glucemia_resultado = (EditText)findViewById(R.id.et_nc_glucemia_resultado);
+        et_nc_hb_resultado = (EditText)findViewById(R.id.et_nc_hb_resultado);
+    }
+
+
+    public void guardarNuevoControl(View view){
+        if(et_nc_edad_gestacional == null)
+            actualizarComponentesNuevoControl();
+        
+    }
+
+
     private String[] obtenerDatos(){
         // obtengo los datos de cada elemento para guardarlos en la base de datos
 
@@ -195,8 +308,9 @@ public class Ingresar_embarazada extends AppCompatActivity {
     }
 
     public void addControl(View view){
-
+        nuevoControl();
     }
+
 
     public void addHijo(View view){}
 

@@ -1,0 +1,796 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/textView52"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Nuevo Control"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <Button
+        android:id="@+id/btn_nc_guardar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="24dp"
+        android:onClick="guardarNuevoControl"
+        android:text="Guardar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView7" />
+
+
+    <ScrollView
+        android:id="@+id/scrollView5"
+        android:layout_width="wrap_content"
+        android:layout_height="360dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintEnd_toStartOf="@+id/scrollView7"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView52">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Edad gestacional"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <EditText
+                    android:id="@+id/et_nc_edad_gestacional"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:ems="10"
+                    android:inputType="number"
+                    android:minHeight="48dp"
+                    app:layout_constraintStart_toStartOf="@+id/textView8"
+                    app:layout_constraintTop_toBottomOf="@+id/textView8"
+                    tools:ignore="SpeakableTextPresentCheck" />
+
+                <TextView
+                    android:id="@+id/textView15"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="General"
+                    app:layout_constraintStart_toStartOf="@+id/et_nc_edad_gestacional"
+                    app:layout_constraintTop_toBottomOf="@+id/et_nc_edad_gestacional" />
+
+                <TextView
+                    android:id="@+id/textView39"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ecografía"
+                    app:layout_constraintBottom_toBottomOf="@+id/radioGroup2"
+                    app:layout_constraintStart_toStartOf="@+id/textView15"
+                    app:layout_constraintTop_toTopOf="@+id/radioGroup2" />
+
+                <RadioGroup
+                    android:id="@+id/radioGroup2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="12dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toEndOf="@+id/textView39"
+                    app:layout_constraintTop_toBottomOf="@+id/textView15">
+
+                    <RadioButton
+                        android:id="@+id/rb_nc_ecografia_si"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Si" />
+
+                    <RadioButton
+                        android:id="@+id/rb_nc_ecografia_no"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="No" />
+
+                    <RadioButton
+                        android:id="@+id/rb_nc_ecografia_solicitada"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Solicitada" />
+                </RadioGroup>
+
+                <TextView
+                    android:id="@+id/textView40"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="HPV"
+                    app:layout_constraintBottom_toBottomOf="@+id/radioGroup3"
+                    app:layout_constraintStart_toStartOf="@+id/textView39"
+                    app:layout_constraintTop_toTopOf="@+id/radioGroup3" />
+
+                <RadioGroup
+                    android:id="@+id/radioGroup3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="@+id/radioGroup2"
+                    app:layout_constraintTop_toBottomOf="@+id/radioGroup2">
+
+                    <RadioButton
+                        android:id="@+id/rb_nc_hpv_si"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Si" />
+
+                    <RadioButton
+                        android:id="@+id/rb_nc_hpv_no"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="No" />
+                </RadioGroup>
+
+                <TextView
+                    android:id="@+id/textView32"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="PAP"
+                    app:layout_constraintBottom_toBottomOf="@+id/radioGroup4"
+                    app:layout_constraintStart_toStartOf="@+id/textView40"
+                    app:layout_constraintTop_toTopOf="@+id/radioGroup4" />
+
+                <RadioGroup
+                    android:id="@+id/radioGroup4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="@+id/radioGroup3"
+                    app:layout_constraintTop_toBottomOf="@+id/radioGroup3">
+
+                    <RadioButton
+                        android:id="@+id/rb_nc_pap_si"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Si" />
+
+                    <RadioButton
+                        android:id="@+id/rb_nc_pap_no"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="No" />
+                </RadioGroup>
+
+                <TextView
+                    android:id="@+id/textView33"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="Inmunizaciones"
+                    app:layout_constraintStart_toStartOf="@+id/textView15"
+                    app:layout_constraintTop_toBottomOf="@+id/radioGroup4" />
+
+                <TextView
+                    android:id="@+id/textView34"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="A GRIPAL"
+                    app:layout_constraintBottom_toBottomOf="@+id/radioGroup5"
+                    app:layout_constraintStart_toStartOf="@+id/textView33"
+                    app:layout_constraintTop_toTopOf="@+id/radioGroup5" />
+
+                <RadioGroup
+                    android:id="@+id/radioGroup5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="12dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toEndOf="@+id/textView34"
+                    app:layout_constraintTop_toBottomOf="@+id/textView33">
+
+                    <RadioButton
+                        android:id="@+id/rb_nc_a_gripal_si"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Si" />
+
+                    <RadioButton
+                        android:id="@+id/rb_nc_a_gripal_no"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="No" />
+                </RadioGroup>
+
+                <TextView
+                    android:id="@+id/textView35"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="TBA"
+                    app:layout_constraintBottom_toBottomOf="@+id/radioGroup6"
+                    app:layout_constraintStart_toStartOf="@+id/textView34"
+                    app:layout_constraintTop_toTopOf="@+id/radioGroup6" />
+
+                <RadioGroup
+                    android:id="@+id/radioGroup6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="@+id/radioGroup5"
+                    app:layout_constraintTop_toBottomOf="@+id/radioGroup5">
+
+                    <RadioButton
+                        android:id="@+id/rb_nc_tba_si"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Si" />
+
+                    <RadioButton
+                        android:id="@+id/rb_nc_tba_no"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="No" />
+                </RadioGroup>
+
+                <TextView
+                    android:id="@+id/textView36"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="DB"
+                    app:layout_constraintBottom_toBottomOf="@+id/radioGroup7"
+                    app:layout_constraintStart_toStartOf="@+id/textView35"
+                    app:layout_constraintTop_toTopOf="@+id/radioGroup7" />
+
+                <RadioGroup
+                    android:id="@+id/radioGroup7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="@+id/radioGroup6"
+                    app:layout_constraintTop_toBottomOf="@+id/radioGroup6">
+
+                    <RadioButton
+                        android:id="@+id/rb_nc_db_previa"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Previa" />
+
+                    <RadioButton
+                        android:id="@+id/rb_nc_db_colocada"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Colocada" />
+
+                    <RadioButton
+                        android:id="@+id/rb_nc_db_no"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="No" />
+                </RadioGroup>
+
+                <TextView
+                    android:id="@+id/textView37"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="VHB"
+                    app:layout_constraintBottom_toBottomOf="@+id/radioGroup8"
+                    app:layout_constraintStart_toStartOf="@+id/textView36"
+                    app:layout_constraintTop_toTopOf="@+id/radioGroup8" />
+
+                <RadioGroup
+                    android:id="@+id/radioGroup8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="@+id/radioGroup7"
+                    app:layout_constraintTop_toBottomOf="@+id/radioGroup7">
+
+                    <RadioButton
+                        android:id="@+id/rb_nc_vhb_previa"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Previa" />
+
+                    <RadioButton
+                        android:id="@+id/rb_nc_vhb_colocada"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Colocada" />
+
+                    <RadioButton
+                        android:id="@+id/rb_nc_vhb_no"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="No" />
+                </RadioGroup>
+
+                <TextView
+                    android:id="@+id/textView41"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="Control clinico"
+                    app:layout_constraintStart_toStartOf="@+id/textView33"
+                    app:layout_constraintTop_toBottomOf="@+id/radioGroup8" />
+
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="@+id/textView41"
+                    app:layout_constraintTop_toBottomOf="@+id/textView41">
+
+                    <RadioButton
+                        android:id="@+id/rb_nc_control_clinico_normal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Normal" />
+
+                    <RadioButton
+                        android:id="@+id/rb_nc_control_clinico_patologico"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Patologico" />
+                </RadioGroup>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <ScrollView
+        android:id="@+id/scrollView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/textView52"
+        app:layout_constraintTop_toBottomOf="@+id/textView52">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="360dp">
+
+                <TextView
+                    android:id="@+id/textView38"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cargar sereologías"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView42"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SIFILIS"
+                    app:layout_constraintBottom_toBottomOf="@+id/radioGroup9"
+                    app:layout_constraintStart_toStartOf="@+id/textView38"
+                    app:layout_constraintTop_toTopOf="@+id/radioGroup9" />
+
+                <RadioGroup
+                    android:id="@+id/radioGroup9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="12dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toEndOf="@+id/textView49"
+                    app:layout_constraintTop_toBottomOf="@+id/textView38">
+
+                    <RadioButton
+                        android:id="@+id/rb_nc_sifilis_solicitado"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Solicitado" />
+
+                    <RadioButton
+                        android:id="@+id/rb_nc_sifilis_positivo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Positivo" />
+
+                    <RadioButton
+                        android:id="@+id/rb_nc_sifilis_negativo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Negativo" />
+
+                    <RadioButton
+                        android:id="@+id/rb_nc_sifilis_no"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="No" />
+                </RadioGroup>
+
+                <TextView
+                    android:id="@+id/textView43"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="HIV"
+                    app:layout_constraintBottom_toBottomOf="@+id/radioGroup10"
+                    app:layout_constraintStart_toStartOf="@+id/textView42"
+                    app:layout_constraintTop_toTopOf="@+id/radioGroup10" />
+
+                <RadioGroup
+                    android:id="@+id/radioGroup10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="@+id/radioGroup9"
+                    app:layout_constraintTop_toBottomOf="@+id/radioGroup9">
+
+                    <RadioButton
+                        android:id="@+id/rb_nc_hiv_solicitado"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Solicitado" />
+
+                    <RadioButton
+                        android:id="@+id/rb_nc_hiv_positivo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Positivo" />
+
+                    <RadioButton
+                        android:id="@+id/rb_nc_hiv_negativo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Negativo" />
+
+                    <RadioButton
+                        android:id="@+id/rb_nc_hiv_no"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="No" />
+                </RadioGroup>
+
+                <TextView
+                    android:id="@+id/textView44"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="CHAGAS"
+                    app:layout_constraintBottom_toBottomOf="@+id/radioGroup11"
+                    app:layout_constraintStart_toStartOf="@+id/textView43"
+                    app:layout_constraintTop_toTopOf="@+id/radioGroup11" />
+
+                <RadioGroup
+                    android:id="@+id/radioGroup11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="@+id/radioGroup10"
+                    app:layout_constraintTop_toBottomOf="@+id/radioGroup10">
+
+                    <RadioButton
+                        android:id="@+id/rb_nc_chagas_solicitado"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Solicitado" />
+
+                    <RadioButton
+                        android:id="@+id/rb_nc_chagas_positivo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Positivo" />
+
+                    <RadioButton
+                        android:id="@+id/rb_nc_chagas_negativo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Negativo" />
+
+                    <RadioButton
+                        android:id="@+id/rb_nc_chagas_no"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="No" />
+                </RadioGroup>
+
+                <TextView
+                    android:id="@+id/textView45"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="VHB"
+                    app:layout_constraintBottom_toBottomOf="@+id/radioGroup12"
+                    app:layout_constraintStart_toStartOf="@+id/textView44"
+                    app:layout_constraintTop_toTopOf="@+id/radioGroup12" />
+
+                <RadioGroup
+                    android:id="@+id/radioGroup12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="@+id/radioGroup11"
+                    app:layout_constraintTop_toBottomOf="@+id/radioGroup11">
+
+                    <RadioButton
+                        android:id="@+id/rb_nc_vhb_solicitado"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Solicitado" />
+
+                    <RadioButton
+                        android:id="@+id/rb_nc_vhb_positivo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Positivo" />
+
+                    <RadioButton
+                        android:id="@+id/rb_nc_vhb_negativo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Negativo" />
+
+                    <RadioButton
+                        android:id="@+id/rb_nc_vhb_sereologia_no"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="No" />
+                </RadioGroup>
+
+                <TextView
+                    android:id="@+id/textView46"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="GAS"
+                    app:layout_constraintBottom_toBottomOf="@+id/radioGroup13"
+                    app:layout_constraintStart_toStartOf="@+id/textView45"
+                    app:layout_constraintTop_toTopOf="@+id/radioGroup13" />
+
+                <RadioGroup
+                    android:id="@+id/radioGroup13"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="@+id/radioGroup12"
+                    app:layout_constraintTop_toBottomOf="@+id/radioGroup12">
+
+                    <RadioButton
+                        android:id="@+id/rb_nc_gas_solicitado"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Solicitado" />
+
+                    <RadioButton
+                        android:id="@+id/rb_nc_gas_positivo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Positivo" />
+
+                    <RadioButton
+                        android:id="@+id/rb_nc_gas_negativo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Negativo" />
+
+                    <RadioButton
+                        android:id="@+id/rb_nc_gas_no"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="No" />
+                </RadioGroup>
+
+                <TextView
+                    android:id="@+id/textView47"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="HB"
+                    app:layout_constraintBottom_toBottomOf="@+id/radioGroup14"
+                    app:layout_constraintStart_toStartOf="@+id/textView46"
+                    app:layout_constraintTop_toTopOf="@+id/radioGroup14" />
+
+                <RadioGroup
+                    android:id="@+id/radioGroup14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="@+id/radioGroup13"
+                    app:layout_constraintTop_toBottomOf="@+id/radioGroup13">
+
+                    <RadioButton
+                        android:id="@+id/rb_nc_hb_solicitado"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Solicitado" />
+
+                    <RadioButton
+                        android:id="@+id/rb_nc_hb_no"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="No" />
+
+                    <RadioButton
+                        android:id="@+id/rb_nc_hb_resultado"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Resultado" />
+
+                </RadioGroup>
+
+                <TextView
+                    android:id="@+id/textView48"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="GLUCEMIA"
+                    app:layout_constraintBottom_toBottomOf="@+id/radioGroup15"
+                    app:layout_constraintStart_toStartOf="@+id/textView47"
+                    app:layout_constraintTop_toTopOf="@+id/radioGroup15" />
+
+                <RadioGroup
+                    android:id="@+id/radioGroup15"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="@+id/radioGroup14"
+                    app:layout_constraintTop_toBottomOf="@+id/radioGroup14">
+
+                    <RadioButton
+                        android:id="@+id/rb_nc_glucemia_solicitado"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Solicitado" />
+
+                    <RadioButton
+                        android:id="@+id/rb_nc_glucemia_no"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="No" />
+
+                    <RadioButton
+                        android:id="@+id/rb_nc_glucemia_resultado"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Resultado" />
+                </RadioGroup>
+
+                <TextView
+                    android:id="@+id/textView49"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Grupo y fac."
+                    app:layout_constraintBottom_toBottomOf="@+id/radioGroup16"
+                    app:layout_constraintStart_toStartOf="@+id/textView48"
+                    app:layout_constraintTop_toTopOf="@+id/radioGroup16" />
+
+                <RadioGroup
+                    android:id="@+id/radioGroup16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="@+id/radioGroup15"
+                    app:layout_constraintTop_toBottomOf="@+id/radioGroup15">
+
+                    <RadioButton
+                        android:id="@+id/rb_nc_grupo_solicitado"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Solicitado" />
+
+                    <RadioButton
+                        android:id="@+id/rb_nc_grupo_no"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="No" />
+
+                    <RadioButton
+                        android:id="@+id/rb_nc_grupo_resultado"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Resultado" />
+                </RadioGroup>
+
+                <EditText
+                    android:id="@+id/et_nc_hb_resultado"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="number"
+                    android:minHeight="48dp"
+                    app:layout_constraintEnd_toEndOf="@+id/radioGroup13"
+                    app:layout_constraintTop_toTopOf="@+id/radioGroup14"
+                    tools:ignore="SpeakableTextPresentCheck" />
+
+                <EditText
+                    android:id="@+id/et_nc_glucemia_resultado"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="number"
+                    android:minHeight="48dp"
+                    app:layout_constraintEnd_toEndOf="@+id/et_nc_hb_resultado"
+                    app:layout_constraintTop_toTopOf="@+id/radioGroup15"
+                    tools:ignore="SpeakableTextPresentCheck" />
+
+                <EditText
+                    android:id="@+id/et_nc_grupo_resultado"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:minHeight="48dp"
+                    app:layout_constraintEnd_toEndOf="@+id/et_nc_glucemia_resultado"
+                    app:layout_constraintTop_toTopOf="@+id/radioGroup16"
+                    tools:ignore="SpeakableTextPresentCheck" />
+
+                <TextView
+                    android:id="@+id/textView50"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="Tensión Arterial"
+                    app:layout_constraintStart_toStartOf="@+id/textView38"
+                    app:layout_constraintTop_toBottomOf="@+id/radioGroup16" />
+
+                <EditText
+                    android:id="@+id/et_nc_tension_arterial"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:minHeight="48dp"
+                    android:text="                    -/-                   "
+                    app:layout_constraintStart_toStartOf="@+id/textView50"
+                    app:layout_constraintTop_toBottomOf="@+id/textView50" />
+
+                <EditText
+                    android:id="@+id/et_nc_observaciones"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:ems="10"
+                    android:gravity="start|top"
+                    android:inputType="textMultiLine"
+                    android:minHeight="48dp"
+                    app:layout_constraintStart_toStartOf="@+id/textView51"
+                    app:layout_constraintTop_toBottomOf="@+id/textView51"
+                    tools:ignore="SpeakableTextPresentCheck" />
+
+                <TextView
+                    android:id="@+id/textView51"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="Observaciones"
+                    app:layout_constraintStart_toStartOf="@+id/textView50"
+                    app:layout_constraintTop_toBottomOf="@+id/et_nc_tension_arterial" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
