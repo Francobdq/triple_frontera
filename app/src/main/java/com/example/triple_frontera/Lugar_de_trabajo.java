@@ -3,6 +3,7 @@ package com.example.triple_frontera;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,8 +19,10 @@ public class Lugar_de_trabajo extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE); // deshabilita la rotación de pantalla
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lugar_de_trabajo);
+        getSupportActionBar().hide();
         pais = (Spinner) findViewById(R.id.spinner_pais);
         area_operativa = (Spinner) findViewById(R.id.spinner_area_operativa);
         paraje = (Spinner) findViewById(R.id.spinner_paraje);

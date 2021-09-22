@@ -34,11 +34,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:text="Datos de Identidad"
-        app:layout_constraintEnd_toEndOf="@+id/scrollView2"
+        app:layout_constraintEnd_toEndOf="@+id/sv_izquierda"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <ScrollView
-        android:id="@+id/scrollView2"
+        android:id="@+id/sv_izquierda"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -225,7 +225,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginStart="10dp"
-        app:layout_constraintStart_toEndOf="@+id/scrollView2"
+        app:layout_constraintStart_toEndOf="@+id/sv_izquierda"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/btn_default_small" />
 
@@ -233,10 +233,11 @@
         android:id="@+id/et_header_nombre_y_apellido"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
         android:layout_marginTop="20dp"
         android:text="Nombre, Apellido"
         android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="@+id/textView17"
+        app:layout_constraintStart_toStartOf="@+id/sv_derecha"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -244,457 +245,500 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="30dp"
         android:text="Antecedentes"
         android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/et_partos"
+        app:layout_constraintEnd_toEndOf="@+id/sv_derecha"
         app:layout_constraintTop_toBottomOf="@+id/et_header_nombre_y_apellido" />
 
-    <EditText
-        android:id="@+id/et_partos"
-        android:layout_width="180dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="12dp"
-        android:ems="10"
-        android:inputType="number"
-        android:minHeight="48dp"
-        android:text="0"
-        app:layout_constraintStart_toEndOf="@+id/et_gestaciones"
-        app:layout_constraintTop_toBottomOf="@+id/textView14"
-        tools:ignore="SpeakableTextPresentCheck" />
 
-    <TextView
-        android:id="@+id/textView14"
+    <ScrollView
+        android:id="@+id/sv_derecha"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Partos"
-        app:layout_constraintStart_toStartOf="@+id/et_partos"
-        app:layout_constraintTop_toBottomOf="@+id/textView13" />
-
-    <TextView
-        android:id="@+id/textView16"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Gestaciones"
-        app:layout_constraintStart_toStartOf="@+id/et_gestaciones"
-        app:layout_constraintTop_toBottomOf="@+id/textView13" />
-
-    <EditText
-        android:id="@+id/et_gestaciones"
-        android:layout_width="180dp"
-        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="12dp"
-        android:ems="10"
-        android:inputType="number"
-        android:minHeight="48dp"
-        android:text="0"
+        android:layout_marginEnd="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageView2"
-        app:layout_constraintTop_toBottomOf="@+id/textView16"
-        tools:ignore="SpeakableTextPresentCheck" />
-
-    <TextView
-        android:id="@+id/textView17"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Edad 1er parto"
-        app:layout_constraintStart_toStartOf="@+id/et_edad_primer_parto"
-        app:layout_constraintTop_toBottomOf="@+id/textView13" />
-
-    <EditText
-        android:id="@+id/et_edad_primer_parto"
-        android:layout_width="180dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="10dp"
-        android:ems="10"
-        android:inputType="number"
-        android:minHeight="48dp"
-        app:layout_constraintEnd_toStartOf="@+id/et_gestaciones"
-        app:layout_constraintTop_toBottomOf="@+id/textView17"
-        tools:ignore="SpeakableTextPresentCheck" />
-
-    <EditText
-        android:id="@+id/et_cesareas"
-        android:layout_width="180dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:ems="10"
-        android:inputType="number"
-        android:minHeight="48dp"
-        android:text="0"
-        app:layout_constraintStart_toStartOf="@+id/textView18"
-        app:layout_constraintTop_toBottomOf="@+id/textView18"
-        tools:ignore="SpeakableTextPresentCheck" />
-
-    <TextView
-        android:id="@+id/textView18"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Cesáreas"
-        app:layout_constraintStart_toStartOf="@+id/et_edad_primer_parto"
-        app:layout_constraintTop_toBottomOf="@+id/et_edad_primer_parto" />
-
-    <TextView
-        android:id="@+id/textView19"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Abortos"
-        app:layout_constraintStart_toStartOf="@+id/et_abortos"
-        app:layout_constraintTop_toBottomOf="@+id/et_gestaciones" />
-
-    <EditText
-        android:id="@+id/et_abortos"
-        android:layout_width="180dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="12dp"
-        android:ems="10"
-        android:inputType="number"
-        android:minHeight="48dp"
-        android:text="0"
-        app:layout_constraintStart_toEndOf="@+id/et_cesareas"
-        app:layout_constraintTop_toBottomOf="@+id/textView19"
-        tools:ignore="SpeakableTextPresentCheck" />
-
-    <TextView
-        android:id="@+id/textView20"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Embarazo Planificado"
-        app:layout_constraintStart_toStartOf="@+id/radioGroup"
-        app:layout_constraintTop_toBottomOf="@+id/et_partos" />
-
-    <RadioGroup
-        android:id="@+id/radioGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="12dp"
-        android:orientation="horizontal"
-        app:layout_constraintStart_toEndOf="@+id/et_abortos"
-        app:layout_constraintTop_toBottomOf="@+id/textView20">
-
-        <RadioButton
-            android:id="@+id/rb_embarazo_planificado_si"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="6dip"
-            android:text="Si" />
-
-        <RadioButton
-            android:id="@+id/rb_embarazo_planificado_no"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="6dip"
-            android:text="No" />
-    </RadioGroup>
-
-    <EditText
-        android:id="@+id/et_ultimo_parto"
-        android:layout_width="180dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:ems="10"
-        android:inputType="date"
-        android:minHeight="48dp"
-        app:layout_constraintStart_toStartOf="@+id/textView21"
-        app:layout_constraintTop_toBottomOf="@+id/textView21"
-        tools:ignore="SpeakableTextPresentCheck" />
-
-    <TextView
-        android:id="@+id/textView21"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Ult. Parto"
-        app:layout_constraintStart_toStartOf="@+id/et_cesareas"
-        app:layout_constraintTop_toBottomOf="@+id/et_cesareas" />
-
-    <EditText
-        android:id="@+id/et_ultima_menstruacion"
-        android:layout_width="180dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="12dp"
-        android:ems="10"
-        android:inputType="date"
-        android:minHeight="48dp"
-        app:layout_constraintStart_toEndOf="@+id/et_ultimo_parto"
-        app:layout_constraintTop_toBottomOf="@+id/textView22"
-        tools:ignore="SpeakableTextPresentCheck" />
-
-    <TextView
-        android:id="@+id/textView22"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Ult. Menstruación"
-        app:layout_constraintStart_toStartOf="@+id/et_ultima_menstruacion"
-        app:layout_constraintTop_toBottomOf="@+id/et_abortos" />
-
-    <TextView
-        android:id="@+id/textView23"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Parto Estimado"
-        app:layout_constraintStart_toStartOf="@+id/et_parto_estimado"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
-
-    <EditText
-        android:id="@+id/et_parto_estimado"
-        android:layout_width="180dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="12dp"
-        android:ems="10"
-        android:inputType="date"
-        android:minHeight="48dp"
-        app:layout_constraintStart_toEndOf="@+id/et_ultima_menstruacion"
-        app:layout_constraintTop_toBottomOf="@+id/textView23"
-        tools:ignore="SpeakableTextPresentCheck" />
-
-    <TextView
-        android:id="@+id/textView24"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="MAC Previo"
-        app:layout_constraintStart_toStartOf="@+id/et_ultimo_parto"
-        app:layout_constraintTop_toBottomOf="@+id/et_ultimo_parto" />
-
-    <ScrollView
-        android:id="@+id/scrollView3"
-        android:layout_width="wrap_content"
-        android:layout_height="180dp"
-        android:layout_marginTop="12dp"
-        app:layout_constraintStart_toStartOf="@+id/textView24"
-        app:layout_constraintTop_toBottomOf="@+id/textView24">
+        app:layout_constraintTop_toBottomOf="@+id/textView13">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <CheckBox
-                android:id="@+id/cb_implante"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Implante" />
-
-            <CheckBox
-                android:id="@+id/cb_diu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="DIU" />
-
-            <CheckBox
-                android:id="@+id/cb_oral"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Oral" />
-
-            <CheckBox
-                android:id="@+id/cb_inyectable"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Inyectable" />
-
-            <CheckBox
-                android:id="@+id/cb_barrera"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Barrera" />
-        </LinearLayout>
-    </ScrollView>
-
-    <TextView
-        android:id="@+id/textView26"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="APP"
-        app:layout_constraintStart_toStartOf="@+id/et_ultima_menstruacion"
-        app:layout_constraintTop_toBottomOf="@+id/et_ultima_menstruacion" />
-
-    <ScrollView
-        android:id="@+id/scrollView4"
-        android:layout_width="wrap_content"
-        android:layout_height="180dp"
-        android:layout_marginTop="12dp"
-        app:layout_constraintStart_toStartOf="@+id/textView26"
-        app:layout_constraintTop_toBottomOf="@+id/textView26">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content"
+                android:maxHeight="400000dp">
+
+                <EditText
+                    android:id="@+id/et_partos"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:ems="10"
+                    android:inputType="number"
+                    android:minHeight="48dp"
+                    android:text="0"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/et_gestaciones"
+                    app:layout_constraintTop_toBottomOf="@+id/textView14"
+                    tools:ignore="SpeakableTextPresentCheck" />
+
+                <TextView
+                    android:id="@+id/textView14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Partos"
+                    app:layout_constraintStart_toStartOf="@+id/et_partos"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Gestaciones"
+                    app:layout_constraintStart_toStartOf="@+id/et_gestaciones"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <EditText
+                    android:id="@+id/et_gestaciones"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:ems="10"
+                    android:inputType="number"
+                    android:minHeight="48dp"
+                    android:text="0"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView16"
+                    tools:ignore="SpeakableTextPresentCheck" />
+
+                <TextView
+                    android:id="@+id/textView17"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Edad 1er parto"
+                    app:layout_constraintStart_toStartOf="@+id/et_edad_primer_parto"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <EditText
+                    android:id="@+id/et_edad_primer_parto"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:ems="10"
+                    android:inputType="number"
+                    android:minHeight="48dp"
+                    app:layout_constraintEnd_toStartOf="@+id/et_gestaciones"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView17"
+                    tools:ignore="SpeakableTextPresentCheck" />
+
+                <EditText
+                    android:id="@+id/et_cesareas"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:ems="10"
+                    android:inputType="number"
+                    android:minHeight="48dp"
+                    android:text="0"
+                    app:layout_constraintStart_toStartOf="@+id/textView18"
+                    app:layout_constraintTop_toBottomOf="@+id/textView18"
+                    tools:ignore="SpeakableTextPresentCheck" />
+
+                <TextView
+                    android:id="@+id/textView18"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Cesáreas"
+                    app:layout_constraintStart_toStartOf="@+id/et_edad_primer_parto"
+                    app:layout_constraintTop_toBottomOf="@+id/et_edad_primer_parto" />
+
+                <TextView
+                    android:id="@+id/textView19"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Abortos"
+                    app:layout_constraintStart_toStartOf="@+id/et_gestaciones"
+                    app:layout_constraintTop_toBottomOf="@+id/et_gestaciones" />
+
+                <EditText
+                    android:id="@+id/et_abortos"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:ems="10"
+                    android:inputType="number"
+                    android:minHeight="48dp"
+                    android:text="0"
+                    app:layout_constraintStart_toStartOf="@+id/textView19"
+                    app:layout_constraintTop_toBottomOf="@+id/textView19"
+                    tools:ignore="SpeakableTextPresentCheck" />
+
+                <TextView
+                    android:id="@+id/textView20"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Embarazo Planificado"
+                    app:layout_constraintStart_toStartOf="@+id/et_partos"
+                    app:layout_constraintTop_toBottomOf="@+id/et_partos" />
+
+                <RadioGroup
+                    android:id="@+id/radioGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="@+id/textView20"
+                    app:layout_constraintTop_toBottomOf="@+id/textView20">
+
+                    <RadioButton
+                        android:id="@+id/rb_embarazo_planificado_si"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="6dip"
+                        android:text="Si" />
+
+                    <RadioButton
+                        android:id="@+id/rb_embarazo_planificado_no"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="6dip"
+                        android:text="No" />
+                </RadioGroup>
+
+                <EditText
+                    android:id="@+id/et_ultimo_parto"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:ems="10"
+                    android:inputType="date"
+                    android:minHeight="48dp"
+                    app:layout_constraintStart_toStartOf="@+id/textView21"
+                    app:layout_constraintTop_toBottomOf="@+id/textView21"
+                    tools:ignore="SpeakableTextPresentCheck" />
+
+                <TextView
+                    android:id="@+id/textView21"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Ult. Parto"
+                    app:layout_constraintStart_toStartOf="@+id/et_cesareas"
+                    app:layout_constraintTop_toBottomOf="@+id/et_cesareas" />
+
+                <EditText
+                    android:id="@+id/et_ultima_menstruacion"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:ems="10"
+                    android:inputType="date"
+                    android:minHeight="48dp"
+                    app:layout_constraintStart_toStartOf="@+id/textView22"
+                    app:layout_constraintTop_toBottomOf="@+id/textView22"
+                    tools:ignore="SpeakableTextPresentCheck" />
+
+                <TextView
+                    android:id="@+id/textView22"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Ult. Menstruación"
+                    app:layout_constraintStart_toStartOf="@+id/et_abortos"
+                    app:layout_constraintTop_toBottomOf="@+id/et_abortos" />
+
+                <TextView
+                    android:id="@+id/textView23"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Parto Estimado"
+                    app:layout_constraintStart_toStartOf="@+id/radioGroup"
+                    app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+
+                <EditText
+                    android:id="@+id/et_parto_estimado"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:ems="10"
+                    android:inputType="date"
+                    android:minHeight="48dp"
+                    app:layout_constraintStart_toStartOf="@+id/textView23"
+                    app:layout_constraintTop_toBottomOf="@+id/textView23"
+                    tools:ignore="SpeakableTextPresentCheck" />
+
+                <TextView
+                    android:id="@+id/textView24"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="MAC Previo"
+                    app:layout_constraintStart_toStartOf="@+id/et_ultimo_parto"
+                    app:layout_constraintTop_toBottomOf="@+id/et_ultimo_parto" />
 
                 <LinearLayout
+                    android:id="@+id/linearLayout3"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:orientation="vertical"
+                    app:layout_constraintStart_toStartOf="@+id/textView24"
+                    app:layout_constraintTop_toBottomOf="@+id/textView24">
 
-                    <CheckBox
-                        android:id="@+id/cb_hta_gestacional"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="HTA Gestacional" />
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
 
-                    <CheckBox
-                        android:id="@+id/cb_hta_dbt_gestacional"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="HTA-DBT Gestacional" />
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
 
-                    <CheckBox
-                        android:id="@+id/cb_toxoplasmosis"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Toxoplasmosis" />
+                            <CheckBox
+                                android:id="@+id/cb_implante"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Implante" />
 
-                    <CheckBox
-                        android:id="@+id/cb_sifilis"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Sifílis" />
+                            <CheckBox
+                                android:id="@+id/cb_diu"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="DIU" />
+
+                            <CheckBox
+                                android:id="@+id/cb_oral"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Oral" />
+
+                            <CheckBox
+                                android:id="@+id/cb_inyectable"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Inyectable" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <CheckBox
+                                android:id="@+id/cb_barrera"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Barrera" />
+                        </LinearLayout>
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
-                <LinearLayout
+                <TextView
+                    android:id="@+id/textView26"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="APP"
+                    app:layout_constraintStart_toStartOf="@+id/et_ultima_menstruacion"
+                    app:layout_constraintTop_toBottomOf="@+id/et_ultima_menstruacion" />
 
-                    <CheckBox
-                        android:id="@+id/cb_chagas"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Chagas" />
+                <LinearLayout
+                    android:id="@+id/linearLayout4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:orientation="vertical"
+                    app:layout_constraintStart_toStartOf="@+id/textView26"
+                    app:layout_constraintTop_toBottomOf="@+id/textView26">
 
-                    <CheckBox
-                        android:id="@+id/cb_dbt"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="DBT" />
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
 
-                    <CheckBox
-                        android:id="@+id/cb_tbc"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="TBC" />
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <CheckBox
+                                android:id="@+id/cb_hta_gestacional"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="HTA Gestacional" />
+
+                            <CheckBox
+                                android:id="@+id/cb_hta_dbt_gestacional"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="HTA-DBT Gestacional" />
+
+                            <CheckBox
+                                android:id="@+id/cb_toxoplasmosis"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Toxoplasmosis" />
+
+                            <CheckBox
+                                android:id="@+id/cb_sifilis"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Sifílis" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <CheckBox
+                                android:id="@+id/cb_chagas"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Chagas" />
+
+                            <CheckBox
+                                android:id="@+id/cb_dbt"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="DBT" />
+
+                            <CheckBox
+                                android:id="@+id/cb_tbc"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="TBC" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
                 </LinearLayout>
 
-            </LinearLayout>
+                <ScrollView
+                    android:id="@+id/scrollView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="180dp"
+                    android:layout_marginTop="12dp"
+                    app:layout_constraintStart_toStartOf="@+id/textView26"
+                    app:layout_constraintTop_toBottomOf="@+id/textView26">
 
+                </ScrollView>
+
+                <TextView
+                    android:id="@+id/textView27"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="Controles"
+                    app:layout_constraintStart_toStartOf="@+id/linearLayout3"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
+
+                <TextView
+                    android:id="@+id/textView28"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="12dp"
+                    android:text="Hijos"
+                    app:layout_constraintStart_toEndOf="@+id/ib_add_control"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
+
+                <Spinner
+                    android:id="@+id/sp_edit_controles"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:minHeight="48dp"
+                    app:layout_constraintStart_toStartOf="@+id/textView27"
+                    app:layout_constraintTop_toBottomOf="@+id/textView27"
+                    tools:ignore="SpeakableTextPresentCheck" />
+
+                <Spinner
+                    android:id="@+id/sp_edit_hijos"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:minHeight="48dp"
+                    app:layout_constraintStart_toStartOf="@+id/textView28"
+                    app:layout_constraintTop_toBottomOf="@+id/textView28"
+                    tools:ignore="SpeakableTextPresentCheck" />
+
+                <ImageButton
+                    android:id="@+id/ib_edit_control"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="12dp"
+                    android:onClick="addControl"
+                    app:layout_constraintStart_toEndOf="@+id/sp_edit_controles"
+                    app:layout_constraintTop_toBottomOf="@+id/textView27"
+                    app:srcCompat="@android:drawable/ic_menu_edit"
+                    tools:ignore="SpeakableTextPresentCheck" />
+
+                <ImageButton
+                    android:id="@+id/ib_add_control"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="12dp"
+                    android:onClick="addControl"
+                    app:layout_constraintStart_toEndOf="@+id/ib_edit_control"
+                    app:layout_constraintTop_toBottomOf="@+id/textView27"
+                    app:srcCompat="@android:drawable/ic_menu_add"
+                    tools:ignore="SpeakableTextPresentCheck" />
+
+                <ImageButton
+                    android:id="@+id/ib_edit_hijo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="12dp"
+                    app:layout_constraintStart_toEndOf="@+id/sp_edit_hijos"
+                    app:layout_constraintTop_toBottomOf="@+id/textView28"
+                    app:srcCompat="@android:drawable/ic_menu_edit"
+                    tools:ignore="SpeakableTextPresentCheck" />
+
+                <ImageButton
+                    android:id="@+id/ib_add_hijo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="12dp"
+                    android:onClick="addHijo"
+                    app:layout_constraintStart_toEndOf="@+id/ib_edit_hijo"
+                    app:layout_constraintTop_toBottomOf="@+id/textView28"
+                    app:srcCompat="@android:drawable/ic_menu_add"
+                    tools:ignore="SpeakableTextPresentCheck" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
     </ScrollView>
-
-    <TextView
-        android:id="@+id/textView27"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Controles"
-        app:layout_constraintStart_toStartOf="@+id/scrollView3"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView3" />
-
-    <TextView
-        android:id="@+id/textView28"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Hijos"
-        app:layout_constraintStart_toStartOf="@+id/sp_edit_hijos"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView4" />
-
-    <Spinner
-        android:id="@+id/sp_edit_controles"
-        android:layout_width="180dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:minHeight="48dp"
-        app:layout_constraintStart_toStartOf="@+id/textView27"
-        app:layout_constraintTop_toBottomOf="@+id/textView27"
-        tools:ignore="SpeakableTextPresentCheck" />
-
-    <Spinner
-        android:id="@+id/sp_edit_hijos"
-        android:layout_width="180dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="12dp"
-        android:minHeight="48dp"
-        app:layout_constraintStart_toEndOf="@+id/ib_add_control"
-        app:layout_constraintTop_toBottomOf="@+id/textView28"
-        tools:ignore="SpeakableTextPresentCheck" />
-
-    <ImageButton
-        android:id="@+id/ib_edit_control"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="addControl"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_edit"
-        tools:ignore="SpeakableTextPresentCheck" />
-
-    <ImageButton
-        android:id="@+id/ib_add_control"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="12dp"
-        android:onClick="addControl"
-        app:layout_constraintStart_toEndOf="@+id/sp_edit_controles"
-        app:layout_constraintTop_toBottomOf="@+id/textView27"
-        app:srcCompat="@android:drawable/ic_menu_add"
-        tools:ignore="SpeakableTextPresentCheck" />
 
     <Button
         android:id="@+id/btn_guardar_embarazada"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
         android:onClick="guardar"
         android:text="Guardar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageView2" />
-
-    <ImageButton
-        android:id="@+id/ib_edit_hijo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="12dp"
-        app:layout_constraintStart_toEndOf="@+id/sp_edit_hijos"
-        app:layout_constraintTop_toBottomOf="@+id/textView28"
-        app:srcCompat="@android:drawable/ic_menu_edit"
-        tools:ignore="SpeakableTextPresentCheck" />
-
-    <ImageButton
-        android:id="@+id/ib_add_hijo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="12dp"
-        android:onClick="addHijo"
-        app:layout_constraintStart_toEndOf="@+id/ib_edit_hijo"
-        app:layout_constraintTop_toBottomOf="@+id/textView28"
-        app:srcCompat="@android:drawable/ic_menu_add"
-        tools:ignore="SpeakableTextPresentCheck" />
+        app:layout_constraintStart_toEndOf="@+id/imageView2"
+        app:layout_constraintTop_toBottomOf="@+id/sv_derecha" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

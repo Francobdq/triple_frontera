@@ -3,6 +3,7 @@ package com.example.triple_frontera;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -14,6 +15,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -53,7 +55,6 @@ public class Ingresar_embarazada extends AppCompatActivity {
 
     /* 
      * terminar la parte del guardado de los datos en nuevo control
-     * en ingresar embarazada hacer que sea arrastrable así se ve todo
      * base de datos
      * 
     */
@@ -61,12 +62,32 @@ public class Ingresar_embarazada extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE); // deshabilita la rotación de pantalla
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ingresar_embarazada);
-        
+        getSupportActionBar().hide();
+
+        checkInterfaz();
         inicializarElementos();
         inicializarSpinners();
         actualizarHeader();
+    }
+    private void checkInterfaz(){
+        int height = getResources().getDisplayMetrics().heightPixels;
+        
+        if(height > 1900)
+            return;
+        
+        ScrollView sv_derecha = findViewById(R.id.sv_derecha);
+        ScrollView sv_izquierda = findViewById(R.id.sv_izquierda);
+
+        int dp_izquierda = (int) (height * 0.39);
+        int dp_derecha = (int) (height * 0.37);
+
+        sv_izquierda.getLayoutParams().height = (int) (dp_izquierda * getResources().getDisplayMetrics().density);
+        sv_derecha.getLayoutParams().height = (int) (dp_derecha * getResources().getDisplayMetrics().density);
+        Toast.makeText(this, "a: " + height, Toast.LENGTH_SHORT).show();
+
     }
 
     private void inicializarSpinners(){

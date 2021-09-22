@@ -3,6 +3,7 @@ package com.example.triple_frontera;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -54,8 +55,10 @@ public class ListadoPacientes extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE); // deshabilita la rotación de pantalla
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listado_pacientes);
+        getSupportActionBar().hide();
 
         buscar_paciente= (EditText)findViewById(R.id.buscar_paciente);
         
