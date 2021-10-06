@@ -26,18 +26,10 @@
 
         <Spinner
             android:id="@+id/spinner_pais"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <EditText
-            android:id="@+id/usuario"
-            android:layout_width="match_parent"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            android:ems="10"
-            android:hint="Usuario"
-            android:inputType="textPersonName"
-            android:minHeight="48dp" />
+            android:minHeight="48dp"
+            tools:ignore="SpeakableTextPresentCheck" />
 
         <TextView
             android:id="@+id/password_tv"
@@ -49,16 +41,7 @@
         <Spinner
             android:id="@+id/spinner_area_operativa"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <EditText
-            android:id="@+id/password"
-            android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="32dp"
-            android:ems="10"
-            android:hint="Password"
-            android:inputType="textPassword"
             android:minHeight="48dp" />
 
         <TextView
@@ -71,7 +54,9 @@
         <Spinner
             android:id="@+id/spinner_paraje"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            tools:ignore="SpeakableTextPresentCheck" />
 
         <Button
             android:id="@+id/button"
