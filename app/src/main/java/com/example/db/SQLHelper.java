@@ -120,14 +120,14 @@ public class SQLHelper {
         edad_primer_parto INTEGER DEFAULT 0 NOT NULL,
         gestaciones INTEGER NOT NULL,
         partos INTEGER NOT NULL,
-        cesareas VARCHAR DEFAULT 0 NOT NULL,
+        cesareas INTEGER DEFAULT 0 NOT NULL,
         abortos INTEGER NOT NULL,
         emabarazo_planificado BOOLEAN NOT NULL,
         fecha_ultima_menstruacion DATE NOT NULL,
         fecha_ultimo_parto DATE,
         parto_estimado DATE,
         id_mac_previo_fk INTEGER NOT NULL,
-        id_app_fk VARCHAR NOT NULL,
+        id_app_fk INTEGER NOT NULL,
         CONSTRAINT id_antecedente PRIMARY KEY (id_antecedente)
     );
 
@@ -139,7 +139,7 @@ public class SQLHelper {
     public static final String PARTOS = "partos";
     public static final String CESAREAS = "cesareas";
     public static final String ABORTOS = "abortos";
-    public static final String EMABARAZO_PLANIFICADO = "emabarazo_planificado";
+    public static final String EMBARAZO_PLANIFICADO = "embarazo_planificado";
     public static final String FECHA_ULTIMA_MENSTRUACION = "fecha_ultima_menstruacion";
     public static final String FECHA_ULTIMO_PARTO = "fecha_ultimo_parto";
     public static final String PARTO_ESTIMADO = "parto_estimado";
@@ -147,21 +147,21 @@ public class SQLHelper {
     public static final String ID_APP_FK = "id_app_fk";
 
     public static final String CREAR_TABLA_ANTECEDENTES = " CREATE TABLE " +
-            NOMBRE_TABLA_ANTECEDENTES+ " ("+
+                NOMBRE_TABLA_ANTECEDENTES+ " ("+
                 ID_ANTECEDENTE +" INTEGER NOT NULL, "+
                 EDAD_PRIMER_PARTO +" INTEGER DEFAULT 0 NOT NULL, "+
                 GESTACIONES + " INTEGER NOT NULL, "+
                 PARTOS + " INTEGER NOT NULL, "+
-                CESAREAS + " VARCHAR DEFAULT 0 NOT NULL, "+
+                CESAREAS + " INTEGER DEFAULT 0 NOT NULL, "+
                 ABORTOS + " INTEGER NOT NULL, "+
-                EMABARAZO_PLANIFICADO +" BOOLEAN NOT NULL, "+
+                EMBARAZO_PLANIFICADO +" BOOLEAN NOT NULL, "+
                 FECHA_ULTIMA_MENSTRUACION + " DATE NOT NULL, "+
                 FECHA_ULTIMO_PARTO + " DATE, "+
                 PARTO_ESTIMADO + " DATE, "+
                 ID_MAC_PREVIO_FK + " INTEGER NOT NULL, "+
-                ID_APP_FK + " VARCHAR NOT NULL, "+
-                " FOREIGN KEY ("+ID_MAC_PREVIO_FK+") REFERENCES "+NOMBRE_TABLA_MAC_PREVIO+" ("+ID_MAC_PREVIO+")"+
-                " FOREIGN KEY ("+ID_APP_FK+") REFERENCES "+NOMBRE_TABLA_APP+" ("+ID_APP+")"+
+                ID_APP_FK + " INTEGER NOT NULL, "+
+                " FOREIGN KEY ("+ID_MAC_PREVIO_FK+") REFERENCES "+NOMBRE_TABLA_MAC_PREVIO+" ("+ID_MAC_PREVIO+"), "+
+                " FOREIGN KEY ("+ID_APP_FK+") REFERENCES "+NOMBRE_TABLA_APP+" ("+ID_APP+"), "+
                 " CONSTRAINT "+ ID_ANTECEDENTE +" PRIMARY KEY ("+ID_ANTECEDENTE+") "+
             "); ";
 
@@ -202,7 +202,7 @@ public class SQLHelper {
                 ID_AREA_OPERATIVA +" INTEGER NOT NULL, "+
                 NOMBRE_AREA_OPERATIVA +" VARCHAR NOT NULL, "+
                 ID_PAIS_FK + " INTEGER NOT NULL, "+
-                " FOREIGN KEY ("+ID_PAIS_FK+") REFERENCES "+NOMBRE_TABLA_PAISES+" ("+ID_PAIS+")"+
+                " FOREIGN KEY ("+ID_PAIS_FK+") REFERENCES "+NOMBRE_TABLA_PAISES+" ("+ID_PAIS+"), "+
                 " CONSTRAINT "+ ID_AREA_OPERATIVA +" PRIMARY KEY ("+ID_AREA_OPERATIVA+") "+
             "); ";
 
@@ -224,7 +224,7 @@ public class SQLHelper {
                 ID_PARAJE +" INTEGER NOT NULL, "+
                 NOMBRE_PARAJE +" VARCHAR NOT NULL, "+
                 ID_AREA_OPERATIVA_FK + " INTEGER NOT NULL, "+
-                " FOREIGN KEY ("+ID_AREA_OPERATIVA_FK+") REFERENCES "+NOMBRE_TABLA_AREAS_OPERATIVAS+" ("+ID_AREA_OPERATIVA+")"+
+                " FOREIGN KEY ("+ID_AREA_OPERATIVA_FK+") REFERENCES "+NOMBRE_TABLA_AREAS_OPERATIVAS+" ("+ID_AREA_OPERATIVA+"), "+
                 " CONSTRAINT "+ ID_PARAJE +" PRIMARY KEY ("+ID_PARAJE+") "+
             "); ";
 
@@ -270,8 +270,8 @@ public class SQLHelper {
                 NUM_VIVIENDA_PACIENTE +" INTEGER NOT NULL, "+
                 ID_ANTECEDENTE_FK +" INTEGER NOT NULL, "+
                 ID_PARAJE_FK+ " INTEGER NOT NULL, "+
-                " CONSTRAINT "+ ID_PACIENTE +" PRIMARY KEY ("+ID_PACIENTE+") "+
-                " FOREIGN KEY ("+ID_ANTECEDENTE_FK+") REFERENCES "+NOMBRE_TABLA_ANTECEDENTES+" ("+ID_ANTECEDENTE+")"+
+                " CONSTRAINT "+ ID_PACIENTE +" PRIMARY KEY ("+ID_PACIENTE+"), "+
+                " FOREIGN KEY ("+ID_ANTECEDENTE_FK+") REFERENCES "+NOMBRE_TABLA_ANTECEDENTES+" ("+ID_ANTECEDENTE+"), "+
                 " FOREIGN KEY ("+ID_PARAJE_FK+") REFERENCES "+NOMBRE_TABLA_PARAJES+" ("+ID_PARAJE+")"+
             "); ";
 
@@ -328,8 +328,8 @@ public class SQLHelper {
                 OBSERVACIONES +" LONGVARCHAR, "+
                 ID_SEROLOGIA_FK +" INTEGER NOT NULL, "+
                 ID_PACIENTE_CONTROL_FK +" INTEGER NOT NULL, "+
-                " CONSTRAINT "+ ID_CONTROL +" PRIMARY KEY ("+ID_CONTROL+") "+
-                " FOREIGN KEY ("+ID_SEROLOGIA_FK+") REFERENCES "+NOMBRE_TABLA_SEROLOGIAS+" ("+ID_SEROLOGIA+")"+
+                " CONSTRAINT "+ ID_CONTROL +" PRIMARY KEY ("+ID_CONTROL+"), "+
+                " FOREIGN KEY ("+ID_SEROLOGIA_FK+") REFERENCES "+NOMBRE_TABLA_SEROLOGIAS+" ("+ID_SEROLOGIA+"), "+
                 " FOREIGN KEY ("+ID_PACIENTE_CONTROL_FK+") REFERENCES "+NOMBRE_TABLA_PACIENTES+" ("+ID_PACIENTE+")"+
             "); ";
 
@@ -361,28 +361,6 @@ public class SQLHelper {
     public static final void eliminarTablas(SQLiteDatabase db, String tabla){
         db.execSQL("DROP TABLE IF EXISTS "+tabla);
     }
-
-
-    public static final String CREAR_TABLAS = CREAR_TABLA_SEROLOGIAS +
-                                            CREAR_TABLA_APP +
-                                            CREAR_TABLA_MAC_PREVIO +
-                                            CREAR_TABLA_ANTECEDENTES +
-                                            CREAR_TABLA_PAISES +
-                                            CREAR_TABLA_AREAS_OPERATIVAS +
-                                            CREAR_TABLA_PARAJES +
-                                            CREAR_TABLA_PACIENTES +
-                                            CREAR_TABLA_CONTROLES; 
-
-    public static final String BORRAR_TABLAS = ""+
-        "DROP TABLE "+NOMBRE_TABLA_SEROLOGIAS+";"+
-        "DROP TABLE "+NOMBRE_TABLA_APP+";"+
-        "DROP TABLE "+NOMBRE_TABLA_MAC_PREVIO+";"+
-        "DROP TABLE "+NOMBRE_TABLA_ANTECEDENTES+";"+
-        "DROP TABLE "+NOMBRE_TABLA_PAISES+";"+
-        "DROP TABLE "+NOMBRE_TABLA_AREAS_OPERATIVAS+";"+
-        "DROP TABLE "+NOMBRE_TABLA_PARAJES+";"+
-        "DROP TABLE "+NOMBRE_TABLA_PACIENTES+";"+
-        "DROP TABLE "+NOMBRE_TABLA_CONTROLES+";";
         
 
     /* FALTAN HIJOS, PUERPERAS Y EMBARAZADAS PERO AUN NO ESTÁ MODELADO.*/
