@@ -16,6 +16,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.db.DbHelper;
+import com.example.db.entidades.Pacientes;
+
+import java.util.List;
+
 public class ListadoPacientes extends AppCompatActivity {
 
     String[] pacientes;
@@ -25,7 +30,7 @@ public class ListadoPacientes extends AppCompatActivity {
 
     int id_paciente_seleccionado = -1;
 
-
+    int id_paraje;
     
 
     // derecha
@@ -89,9 +94,23 @@ public class ListadoPacientes extends AppCompatActivity {
         glucemia = (TextView)findViewById(R.id.tb_glucemia_tv);
         grupo_y_factor = (TextView)findViewById(R.id.tb_grupo_y_factor_tv);
 
-        int id_paraje = 0;
+        Intent intent = getIntent();
+        id_paraje = intent.getIntExtra("id_paraje", -1); //if it's a string you stored.
+        DbHelper db = new DbHelper(ListadoPacientes.this);
 
-        pacientes = BaseDeDatos.pacientesNombreConDNI(id_paraje);
+
+        List<Pacientes> pacientes_todo = db.getPacientesFromParaje(id_paraje);
+        pacientes = new String[pacientes_todo.size()];
+        System.out.println("------------------------------");
+        System.out.println("Pacientes de paraje de id " + id_paraje);
+        for(int i = 0; i < pacientes_todo.size(); i++){
+            pacientes[i] = pacientes_todo.get(i).documento + " - " + pacientes_todo.get(i).nombre + " " + pacientes_todo.get(i).apellido;
+            System.out.println(pacientes[i]);
+        }
+
+        
+        db.close();
+        
         listaPacientes();
         seleccionItemLista();
 

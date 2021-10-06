@@ -20,13 +20,20 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.db.DbHelper;
+import com.example.db.entidades.Pacientes;
+
 import org.w3c.dom.Text;
 
 public class Ingresar_embarazada extends AppCompatActivity {
 
+    // para ahorrar tiempos de carga
+
+
     // izquierda
     EditText nombre, apellido, documento, fecha_de_nacimiento;
     Spinner origen, nacionalidad, pais, area_operativa, paraje;
+    int[] id_parajes;
     EditText numero_de_vivienda;
 
 
@@ -274,8 +281,9 @@ public class Ingresar_embarazada extends AppCompatActivity {
     }
 
 
-    private String[] obtenerDatos(){
+    private Pacientes obtenerDatos(){
         // obtengo los datos de cada elemento para guardarlos en la base de datos
+
 
         // izquierda
         String str_nombre = nombre.getText().toString();
@@ -284,6 +292,15 @@ public class Ingresar_embarazada extends AppCompatActivity {
         String str_fecha_de_nacimiento = fecha_de_nacimiento.getText().toString();
 
         String str_numero_de_vivienda = numero_de_vivienda.getText().toString();
+
+        String str_origen = origen.getSelectedItem().toString();
+        String str_nacionalidad = nacionalidad.getSelectedItem().toString();
+
+        String str_pais = pais.getSelectedItem().toString();
+        String str_area_operativa = area_operativa.getSelectedItem().toString();
+        String str_paraje = paraje.getSelectedItem().toString();
+
+        int id_paraje = 0;
 
         // derecha
         String str_edad_primer_parto = edad_primer_parto.getText().toString();
@@ -312,6 +329,7 @@ public class Ingresar_embarazada extends AppCompatActivity {
         String str_dbt =  String.valueOf(cb_dbt.isChecked());
         String str_tbc =  String.valueOf(cb_tbc.isChecked());
 
+
         String[] salida = new String[]{str_nombre, str_apellido, str_documento, str_fecha_de_nacimiento, str_numero_de_vivienda,
                 str_edad_primer_parto, str_gestaciones, str_partos, str_cesareas, str_abortos, str_embarazo_planificado,
                 str_ultimo_parto, str_ultima_menstruacion, str_parto_estimado, str_implante, str_diu, str_oral,
@@ -321,11 +339,15 @@ public class Ingresar_embarazada extends AppCompatActivity {
         for (int i = 0; i < salida.length; i++) {
             if(salida[i].equals("")){
                 Toast.makeText(this, "Faltan datos por completar.", Toast.LENGTH_SHORT).show();
+                return null;
             }
         }
 
+        Pacientes nuevoPaciente = new Pacientes(0, str_nombre, str_apellido, Integer.parseInt(str_documento), str_fecha_de_nacimiento,
+                str_origen, str_nacionalidad, Integer.parseInt(str_numero_de_vivienda),0,0);
 
-        return salida;
+        return nuevoPaciente;
+
     }
 
     public void addControl(View view){
@@ -337,7 +359,13 @@ public class Ingresar_embarazada extends AppCompatActivity {
 
     public void guardar(View view){
         // obtengo los datos
-        String[] datos = obtenerDatos();
-        // los guardo en la base de datos
+        Pacientes nuevoPaciente = obtenerDatos();
+        // los guardo en la base de
+        if(nuevoPaciente == null)
+            return;
+
+        DbHelper db = new DbHelper(Ingresar_embarazada.this);
+
+        db.addPaciente(nuevoPaciente);
     }
 }
