@@ -11,7 +11,9 @@ import android.widget.Toast;
 import com.example.db.DbHelper;
 import com.example.db.SQLHelper;
 import com.example.db.entidades.Antecedentes;
+import com.example.db.entidades.Controles;
 import com.example.db.entidades.Pacientes;
+import com.example.db.entidades.Sereologias;
 import com.example.db.entidades.Zona;
 
 import java.util.List;
@@ -32,26 +34,33 @@ public class MainActivity extends AppCompatActivity {
         password = (EditText)findViewById(R.id.password);
 
         /*DbHelper db = new DbHelper(MainActivity.this);
-        db.addPais(0,"Argentina");
-        db.addPais(1,"Bolivia");
-        db.addPais(2,"Paraguay");
-        db.addArea_operativa(1,"area 2", 0);
-        db.addArea_operativa(2,"area 3", 2);
-        db.addArea_operativa(3,"area 4", 2);
-        db.addParaje(0, "paraje 1", 1);
-        db.addParaje(1, "paraje 1", 2);
-        db.addParaje(2, "paraje 1", 3);
-        db.addParaje(3, "paraje 1", 1);
+        db.addPais("Argentina");
+        db.addArea_operativa("area 1", db.getLastInsertedId());
+        db.addPais("Bolivia");
+        db.addPais("Paraguay");
+        int id_paraguay = db.getLastInsertedId();
+        db.addArea_operativa("area 2", id_paraguay);
+        int id_area_2 = db.getLastInsertedId();
+        db.addParaje("paraje 1", id_area_2);
+        int id_paraje_1 = db.getLastInsertedId();
+        db.addParaje("paraje 2", id_area_2);
+        db.addArea_operativa("area 3", id_paraguay);
+        int id_area_3 = db.getLastInsertedId();
+        db.addParaje("paraje 3", id_area_3);
+        int id_paraje_3 = db.getLastInsertedId();
+        db.addParaje("paraje 4", id_area_3);
+        
+       
 
-        Pacientes paciente_paraje_3_1 = new Pacientes(0,"Cristela","Perez",22334566,"22/10/1999","Criolla","Argentina",10,0,3);
-        Pacientes paciente_paraje_3_2 = new Pacientes(1,"Abigail", "Lopez", 23450244, "10/03/1980", "Originaria", "Paraguay", 11, 1, 1);
-        Pacientes paciente_paraje_3_3 = new Pacientes(2,"Juana", "Perez", 23456789, "15/05/1984", "Originaria", "Paraguay", 12, 2, 3);
-        Pacientes paciente_paraje_3_4 = new Pacientes(3,"Maria", "Franco", 23456729, "01/02/1977", "Criolla", "Bolivia", 13, 3, 3);
-        Pacientes paciente_paraje_3_5 = new Pacientes(4,"Josefa", "Dumbsky", 23454099, "30/05/1989", "Originaria", "Paraguay", 14, 4, 3);
+        Pacientes paciente_paraje_3_1 = new Pacientes("Cristela","Perez",22334566,"22/10/1999","Criolla","Argentina",10,0,id_paraje_3);
+        Pacientes paciente_paraje_1_1 = new Pacientes("Abigail", "Lopez", 23450244, "10/03/1980", "Originaria", "Paraguay", 11, 0, id_paraje_1);
+        Pacientes paciente_paraje_3_3 = new Pacientes("Juana", "Perez", 23456789, "15/05/1984", "Originaria", "Paraguay", 12, 0, id_paraje_3);
+        Pacientes paciente_paraje_3_4 = new Pacientes("Maria", "Franco", 23456729, "01/02/1977", "Criolla", "Bolivia", 13, 0, id_paraje_3);
+        Pacientes paciente_paraje_3_5 = new Pacientes("Josefa", "Dumbsky", 23454099, "30/05/1989", "Originaria", "Paraguay", 14, 0, id_paraje_3);
 
 
         db.addPaciente(paciente_paraje_3_1);
-        db.addPaciente(paciente_paraje_3_2);
+        db.addPaciente(paciente_paraje_1_1);
         db.addPaciente(paciente_paraje_3_3);
         db.addPaciente(paciente_paraje_3_4);
         db.addPaciente(paciente_paraje_3_5);
@@ -123,8 +132,14 @@ public class MainActivity extends AppCompatActivity {
             String datos = "Paciente = " +pacientes.get(i).id +"-"+  pacientes.get(i).nombre + " " + pacientes.get(i).apellido + " " + pacientes.get(i).documento + " " + pacientes.get(i).fecha_de_nacimiento + " " + pacientes.get(i).nacionalidad + " " + pacientes.get(i).id_paraje_fk;
             Toast.makeText(MainActivity.this, datos, Toast.LENGTH_SHORT).show();
             System.out.println(datos);
-        }*/
-        
+        }
+
+
+        Controles control = new Controles( 0,0, "SI", 0, 0, 0,  0, "SI", "SI","NORMAL",0f,0);
+        db.addControl(control);
+
+        Sereologias sereologia1 = new Sereologias(0,"","","","","","10","glucemia","+0", db.getLastInsertedId());
+        db.addSereologia(sereologia1);*/
 
 
         // BORRAR ESTO ES PARA DEBUG
@@ -141,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        if(BaseDeDatos.Login(user, pass)){
+        if(true){
             Toast.makeText(getApplicationContext(), "Login", Toast.LENGTH_SHORT).show();
             Intent myIntent = new Intent(MainActivity.this, Lugar_de_trabajo.class);
             MainActivity.this.startActivity(myIntent);

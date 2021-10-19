@@ -17,20 +17,27 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.db.DbHelper;
+import com.example.db.entidades.Controles;
 import com.example.db.entidades.Pacientes;
+import com.example.db.entidades.Sereologias;
 
 import java.util.List;
 
 public class ListadoPacientes extends AppCompatActivity {
 
     String[] pacientes;
+    int[] id_controles;
 
     EditText buscar_paciente;
     ListView list_pacientes;
 
     int id_paciente_seleccionado = -1;
 
+    String pais_elegido;
+    String area_operativa_elegida;
+    String paraje_elegido;
     int id_paraje;
+    int[] id_pacientes;
     
 
     // derecha
@@ -95,32 +102,45 @@ public class ListadoPacientes extends AppCompatActivity {
         grupo_y_factor = (TextView)findViewById(R.id.tb_grupo_y_factor_tv);
 
         Intent intent = getIntent();
-        id_paraje = intent.getIntExtra("id_paraje", -1); //if it's a string you stored.
+        pais_elegido = intent.getStringExtra("pais_elegido");
+        area_operativa_elegida = intent.getStringExtra("area_operativa_elegida");
+        paraje_elegido = intent.getStringExtra("paraje_elegido");
+        id_paraje = intent.getIntExtra("id_paraje", -1);
         DbHelper db = new DbHelper(ListadoPacientes.this);
 
 
         List<Pacientes> pacientes_todo = db.getPacientesFromParaje(id_paraje);
         pacientes = new String[pacientes_todo.size()];
+        id_pacientes = new int[pacientes_todo.size()];
+
         System.out.println("------------------------------");
         System.out.println("Pacientes de paraje de id " + id_paraje);
         for(int i = 0; i < pacientes_todo.size(); i++){
             pacientes[i] = pacientes_todo.get(i).documento + " - " + pacientes_todo.get(i).nombre + " " + pacientes_todo.get(i).apellido;
+            id_pacientes[i] = pacientes_todo.get(i).id;
             System.out.println(pacientes[i]);
         }
 
         
-        db.close();
+
         
         listaPacientes();
         seleccionItemLista();
 
-        cargarDatosPaciente();
-        cargarControlesEnSpinner();
+        
+        cargarControlesEnSpinner(db);
+
+        db.close();
     }
 
 
     public void irAEmbarazada(View view){
         Intent myIntent = new Intent(ListadoPacientes.this, Ingresar_embarazada.class);
+        myIntent.putExtra("pais_elegido", pais_elegido);
+        myIntent.putExtra("area_operativa_elegida", area_operativa_elegida);
+        myIntent.putExtra("paraje_elegido", paraje_elegido);
+        myIntent.putExtra("id_paraje", id_paraje);
+        myIntent.putExtra("id_paciente", id_paciente_seleccionado);
         ListadoPacientes.this.startActivity(myIntent);
     }
 
@@ -152,20 +172,51 @@ public class ListadoPacientes extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String paciente = pacientes[position];
-                Toast.makeText(getApplicationContext(),paciente, Toast.LENGTH_SHORT).show();
+                id_paciente_seleccionado = id_pacientes[position];
+                Toast.makeText(getApplicationContext(), id_paciente_seleccionado  +"-"+ paciente, Toast.LENGTH_SHORT).show();
+
+                // cargar datos del paciente en el lado deerecho
+                DbHelper db = new DbHelper(ListadoPacientes.this);
+                Pacientes paciente_seleccionado = db.getPaciente(id_paciente_seleccionado );
+                System.out.println("---------------------------------------------------------------------");
+                System.out.println(id_paciente_seleccionado );
+                System.out.println(paciente_seleccionado);
+                if(paciente_seleccionado != null ){
+                    System.out.println(paciente_seleccionado.nombre);
+                    cargarDatosPaciente(paciente_seleccionado);
+                    // cargar controles del paciente
+                    cargarControlesEnSpinner(db);
+                }
+
+
+
+                
+                // cierro la base de datos
+                db.close();
             }   
         });
     }
 
-    private void cargarControlesEnSpinner(){
-        String[] controles = BaseDeDatos.Controles(id_paciente_seleccionado);
+    private void cargarControlesEnSpinner(DbHelper db){
+
+        List<Controles> controles_ob = db.getControlesFromPaciente(id_paciente_seleccionado);
+        String[] controles = new String[controles_ob.size()];
+        int[] id_controles = new int[controles_ob.size()];
+        System.out.println("cargarControlesEnSpinner----------------------------");
+        System.out.println(id_controles.length);
+        for (int i = 0; i < controles_ob.size(); i++) {
+            controles[i] = ""+controles_ob.get(i).id;
+            id_controles[i] = controles_ob.get(i).id;
+        }
+
+
         ArrayAdapter adapter = new ArrayAdapter(this,R.layout.list_item,R.id.text,controles);
         sp_controles.setAdapter(adapter);
         
         sp_controles.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                cargarDatosDeControl(1); // el id es auxiliar se debe buscar el id del control
+                cargarDatosDeControl(controles_ob.get(position), db.getAllSereologiaFromControles(id_controles[position])); // el id es auxiliar se debe buscar el id del control
             }
         
             @Override
@@ -177,37 +228,47 @@ public class ListadoPacientes extends AppCompatActivity {
         });
     }
 
-    private void cargarDatosDeControl(int id_control){
-        String[] datosDeControl = BaseDeDatos.getDatosControl(id_control); 
+    private void cargarDatosDeControl(Controles control, Sereologias sereologia){
+        if(control == null){
+            Toast.makeText(getApplicationContext(), "No existe el control", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-        estado.setText(datosDeControl[0]);
-        edad_gestacional.setText(datosDeControl[1]);
-        eco.setText(datosDeControl[2]);
-        fpp.setText(datosDeControl[3]);
-        control_clinico.setText(datosDeControl[4]);
+        estado.setText("AGREGAR");
+        edad_gestacional.setText(""+control.edad_gestacional);
+        eco.setText(""+control.ecografia);
+        fpp.setText("fecha probable parto");
+        control_clinico.setText(""+control.control_clinico);
+
+
+        if (sereologia == null){
+            Toast.makeText(getApplicationContext(), "No existe la sereologia", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
 
         // datos de laboratorio
-        sifilis.setText(datosDeControl[5]);
-        hiv.setText(datosDeControl[6]);
-        chagas.setText(datosDeControl[7]);
-        vhb.setText(datosDeControl[8]);
-        hb.setText(datosDeControl[9]);
-        glucemia.setText(datosDeControl[10]);
-        grupo_y_factor.setText(datosDeControl[11]);
+        sifilis.setText(""+sereologia.sifilis);
+        hiv.setText(""+sereologia.hiv);
+        chagas.setText(""+sereologia.chagas);
+        vhb.setText(""+sereologia.vhb);
+        hb.setText(""+sereologia.hb);
+        glucemia.setText(""+sereologia.glucemia);
+        grupo_y_factor.setText(""+sereologia.grupo_factor);
 
 
 
     }
 
-    private void cargarDatosPaciente(){
-        String[] datosPersonales = BaseDeDatos.DatosPersonales(id_paciente_seleccionado);
+    private void cargarDatosPaciente(Pacientes paciente_seleccionado){
 
-        nombre_header_tv.setText(datosPersonales[0] + ", " + datosPersonales[1]);
+        nombre_header_tv.setText(paciente_seleccionado.nombre + ", " + paciente_seleccionado.apellido);
 
-        nombre_paciente.setText(datosPersonales[0]);
-        apellidos_paciente.setText(datosPersonales[1]);
-        documento_paciente.setText(datosPersonales[2]);
-        fecha_de_nacimiento.setText(datosPersonales[3]);
+        nombre_paciente.setText(paciente_seleccionado.nombre);
+        apellidos_paciente.setText(paciente_seleccionado.apellido);
+        documento_paciente.setText((""+paciente_seleccionado.documento)); // paso el documento a string
+        fecha_de_nacimiento.setText(paciente_seleccionado.fecha_de_nacimiento);
+
     }
 
 }

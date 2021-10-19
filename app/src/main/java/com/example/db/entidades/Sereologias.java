@@ -18,16 +18,17 @@ package com.example.db.entidades;
 
 public class Sereologias {
     public int id;
-    public int sifilis;
-    public int hiv;
-    public int chagas;
-    public int vhb;
-    public int gas;
+    public String sifilis;
+    public String hiv;
+    public String chagas;
+    public String vhb;
+    public String gas;
     public String hb;
     public String glucemia;
     public String grupo_factor;
+    public int id_control_fk;
 
-    public Sereologias(int id, int sifilis, int hiv, int chagas, int vhb, int gas, String hb, String glucemia, String grupo_factor) {
+    public Sereologias(int id, String sifilis, String hiv, String chagas, String vhb, String gas, String hb, String glucemia, String grupo_factor, int id_control_fk) {
         this.id = id;
         this.sifilis = sifilis;
         this.hiv = hiv;
@@ -37,6 +38,7 @@ public class Sereologias {
         this.hb = hb;
         this.glucemia = glucemia;
         this.grupo_factor = grupo_factor;
+        this.id_control_fk = id_control_fk;
     }
 
     

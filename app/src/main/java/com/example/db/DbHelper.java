@@ -8,7 +8,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.db.entidades.Antecedentes;
+import com.example.db.entidades.App;
 import com.example.db.entidades.Controles;
+import com.example.db.entidades.Mac_previo;
 import com.example.db.entidades.Pacientes;
 import com.example.db.entidades.Sereologias;
 import com.example.db.entidades.Zona;
@@ -34,8 +36,11 @@ import java.util.List;
 
 
 public class DbHelper extends SQLiteOpenHelper {
-    private static final int DATABASE_VERSION = 7;
+    private static final int DATABASE_VERSION = 15;
     private static final String DATABASE_NAME = "triple_frontera.db";
+
+    private static long last_id = -1;
+
 
     //private static final String SQL_CREATE_ENTRIES = SQLHelper.CREAR_TABLAS;
     //private static final String SQL_DELETE_ENTRIES = "DROP TABLE "+SQLHelper.NOMBRE_TABLA_PAISES+";";
@@ -61,31 +66,34 @@ public class DbHelper extends SQLiteOpenHelper {
         onUpgrade(db, oldVersion, newVersion);
     }
 
-    private boolean insertarLocalizacion(String nombre_tabla, String id_key, int id,String nombre_key, String nombre,String fk_key, int fk){
+    private boolean insertarLocalizacion(String nombre_tabla, String nombre_key, String nombre,String fk_key, int fk){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(id_key, id);
+        //values.put(id_key, last_id);
         values.put(nombre_key, nombre);
         if (fk != -1)
             values.put(fk_key, fk);
 
-        long insert = db.insert(nombre_tabla, null, values);
-        return (insert != -1);
+        last_id = db.insert(nombre_tabla, null, values);
+
+        db.close();
+
+        return (last_id != -1);
     }
 
 
-    public boolean addPais(int id, String nombre){
-        boolean salida = insertarLocalizacion(SQLHelper.NOMBRE_TABLA_PAISES, SQLHelper.ID_PAIS, id, SQLHelper.NOMBRE_PAIS, nombre, "", -1);
+    public boolean addPais(String nombre){
+        boolean salida = insertarLocalizacion(SQLHelper.NOMBRE_TABLA_PAISES, SQLHelper.NOMBRE_PAIS, nombre, "", -1);
         return salida;
     }
 
-    public boolean addArea_operativa(int id, String nombre, int id_pais){
-        boolean salida = insertarLocalizacion(SQLHelper.NOMBRE_TABLA_AREAS_OPERATIVAS, SQLHelper.ID_AREA_OPERATIVA, id, SQLHelper.NOMBRE_AREA_OPERATIVA, nombre, SQLHelper.ID_PAIS_FK, id_pais);
+    public boolean addArea_operativa(String nombre, int id_pais){
+        boolean salida = insertarLocalizacion(SQLHelper.NOMBRE_TABLA_AREAS_OPERATIVAS, SQLHelper.NOMBRE_AREA_OPERATIVA, nombre, SQLHelper.ID_PAIS_FK, id_pais);
         return salida;
     }
 
-    public boolean addParaje(int id, String nombre, int id_area_operativa){
-        boolean salida = insertarLocalizacion(SQLHelper.NOMBRE_TABLA_PARAJES, SQLHelper.ID_PARAJE, id, SQLHelper.NOMBRE_PARAJE, nombre, SQLHelper.ID_AREA_OPERATIVA_FK, id_area_operativa);
+    public boolean addParaje(String nombre, int id_area_operativa){
+        boolean salida = insertarLocalizacion(SQLHelper.NOMBRE_TABLA_PARAJES, SQLHelper.NOMBRE_PARAJE, nombre, SQLHelper.ID_AREA_OPERATIVA_FK, id_area_operativa);
         return salida;
     }
 
@@ -105,10 +113,10 @@ public class DbHelper extends SQLiteOpenHelper {
     );
     */
 
-    public boolean addPaciente(Pacientes paciente){
-        SQLiteDatabase db = this.getWritableDatabase();
+    private ContentValues getValuesPaciente(Pacientes paciente){
         ContentValues values = new ContentValues();
-        values.put(SQLHelper.ID_PACIENTE, paciente.id);
+
+        //values.put(SQLHelper.ID_PACIENTE, paciente.id);
         values.put(SQLHelper.NOMBRE_PACIENTE, paciente.nombre);
         values.put(SQLHelper.APELLIDO_PACIENTE, paciente.apellido);
         values.put(SQLHelper.DOCUMENTO_PACIENTE, paciente.documento);
@@ -119,8 +127,15 @@ public class DbHelper extends SQLiteOpenHelper {
         values.put(SQLHelper.ID_ANTECEDENTE_FK, paciente.id_antecedente_fk);
         values.put(SQLHelper.ID_PARAJE_FK, paciente.id_paraje_fk);
 
-        long insert = db.insert(SQLHelper.NOMBRE_TABLA_PACIENTES, null, values);
-        return (insert != -1);
+        return values;
+    }
+
+    public boolean addPaciente(Pacientes paciente){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = getValuesPaciente(paciente);
+
+        last_id = db.insert(SQLHelper.NOMBRE_TABLA_PACIENTES, null, values);
+        return (last_id != -1);
 
     }
 
@@ -144,11 +159,11 @@ public class DbHelper extends SQLiteOpenHelper {
         CONSTRAINT id_control PRIMARY KEY (id_control)
     );
     */
-    public boolean addControl(Controles control){
-        SQLiteDatabase db = this.getWritableDatabase();
+
+    private ContentValues getValuesControl(Controles control){
         ContentValues values = new ContentValues();
 
-        values.put(SQLHelper.ID_CONTROL, control.id);
+        //values.put(SQLHelper.ID_CONTROL, control.id);
         values.put(SQLHelper.EDAD_GESTACIONAL, control.edad_gestacional);
         values.put(SQLHelper.ECOGRAFIA, control.ecografia);
         values.put(SQLHelper.HPV, control.hpv);
@@ -160,11 +175,17 @@ public class DbHelper extends SQLiteOpenHelper {
         values.put(SQLHelper.CONTROL_CLINICO, control.control_clinico);
         values.put(SQLHelper.TENSION_ARTERIAL, control.tension_arterial);
         values.put(SQLHelper.OBSERVACIONES, control.observaciones);
-        values.put(SQLHelper.ID_SEROLOGIA_FK, control.id_sereologia_fk);
         values.put(SQLHelper.ID_PACIENTE_CONTROL_FK, control.id_paciente_control_fk);
 
-        long insert = db.insert(SQLHelper.NOMBRE_TABLA_CONTROLES, null, values);
-        return (insert != -1);
+        return values;
+    }
+
+    public boolean addControl(Controles control){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = getValuesControl(control);
+
+        last_id = db.insert(SQLHelper.NOMBRE_TABLA_CONTROLES, null, values);
+        return (last_id != -1);
     }
 
     /*
@@ -182,11 +203,11 @@ public class DbHelper extends SQLiteOpenHelper {
         CONSTRAINT pk_sereologia PRIMARY KEY (id_sereologia)
     );
     */ 
-    public boolean addSereologia(Sereologias sereologia){
-        SQLiteDatabase db = this.getWritableDatabase();
+
+    private ContentValues getValuesSereologia(Sereologias sereologia){
         ContentValues values = new ContentValues();
 
-        values.put(SQLHelper.ID_SEROLOGIA, sereologia.id);
+        //values.put(SQLHelper.ID_SEROLOGIA, sereologia.id);
         values.put(SQLHelper.SIFILIS_SEROLOGIA, sereologia.sifilis);
         values.put(SQLHelper.HIV_SEROLOGIA, sereologia.hiv);
         values.put(SQLHelper.CHAGAS_SEROLOGIA, sereologia.chagas);
@@ -195,9 +216,18 @@ public class DbHelper extends SQLiteOpenHelper {
         values.put(SQLHelper.HB_SEROLOGIA, sereologia.hb);
         values.put(SQLHelper.GLUCEMIA, sereologia.glucemia);
         values.put(SQLHelper.GRUPO_FACTOR_SEROLOGIA, sereologia.grupo_factor);
+        values.put(SQLHelper.ID_CONTROL_FK, sereologia.id_control_fk);
 
-        long insert = db.insert(SQLHelper.NOMBRE_TABLA_SEROLOGIAS, null, values);
-        return (insert != -1);
+        return values;
+
+    }
+
+    public boolean addSereologia(Sereologias sereologia){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = getValuesSereologia(sereologia);
+
+        last_id = db.insert(SQLHelper.NOMBRE_TABLA_SEROLOGIAS, null, values);
+        return (last_id != -1);
     }
 
     /* 
@@ -219,11 +249,10 @@ public class DbHelper extends SQLiteOpenHelper {
 
     */
 
-    public boolean addAntecedente(Antecedentes antecedente){
-        SQLiteDatabase db = this.getWritableDatabase();
+    private ContentValues getValuesAntecedente(Antecedentes antecedente){
         ContentValues values = new ContentValues();
 
-        values.put(SQLHelper.ID_ANTECEDENTE, antecedente.id);
+        //values.put(SQLHelper.ID_ANTECEDENTE, antecedente.id);
         values.put(SQLHelper.EDAD_PRIMER_PARTO, antecedente.edad_primer_parto);
         values.put(SQLHelper.GESTACIONES, antecedente.gestaciones);
         values.put(SQLHelper.PARTOS, antecedente.partos);
@@ -236,10 +265,86 @@ public class DbHelper extends SQLiteOpenHelper {
         values.put(SQLHelper.ID_MAC_PREVIO_FK, antecedente.id_mac_previo_fk);
         values.put(SQLHelper.ID_APP_FK, antecedente.id_app_fk);
 
-        long insert = db.insert(SQLHelper.NOMBRE_TABLA_ANTECEDENTES, null, values);
-        return (insert != -1);
+        return values;
     }
 
+    public boolean addAntecedente(Antecedentes antecedente){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = getValuesAntecedente(antecedente);
+
+        last_id = db.insert(SQLHelper.NOMBRE_TABLA_ANTECEDENTES, null, values);
+        return (last_id != -1);
+    }
+
+    /* CREATE TABLE app (
+            id_app INTEGER,
+            hta_gestacional BOOLEAN NOT NULL,
+            hta_dbt_gestacional BOOLEAN NOT NULL,
+            toxoplasmosis BOOLEAN NOT NULL,
+            tbc BOOLEAN NOT NULL,
+            sifilis BOOLEAN NOT NULL,
+            chagas BOOLEAN NOT NULL,
+            dbt BOOLEAN NOT NULL,
+            CONSTRAINT id_app PRIMARY KEY (id_app)
+    );
+    */
+
+    private ContentValues getValuesApp(App app){
+        ContentValues values = new ContentValues();
+
+        //values.put(SQLHelper.ID_APP, app.id);
+        values.put(SQLHelper.HTA_GESTACIONAL, app.hta_gestacional);
+        values.put(SQLHelper.HTA_DBT_GESTACIONAL, app.hta_dbt_gestacional);
+        values.put(SQLHelper.TOXOPLASMOSIS, app.toxoplasmosis);
+        values.put(SQLHelper.TBC, app.tbc);
+        values.put(SQLHelper.SIFILIS, app.sifilis);
+        values.put(SQLHelper.CHAGAS, app.chagas);
+        values.put(SQLHelper.DBT, app.dbt);
+
+        return values;
+    }
+
+    public boolean addApp(App app){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = getValuesApp(app);
+
+        last_id = db.insert(SQLHelper.NOMBRE_TABLA_APP, null, values);
+        return (last_id != -1);
+    }
+
+    /*
+    CREATE TABLE mac_previo (
+        id_mac_previo INTEGER NOT NULL,
+        implante BOOLEAN NOT NULL,
+        diu BOOLEAN NOT NULL,
+        oral BOOLEAN NOT NULL,
+        inyectable BOOLEAN NOT NULL,
+        barrera BOOLEAN NOT NULL,
+        CONSTRAINT id_mac_previo PRIMARY KEY (id_mac_previo)
+    );
+
+    */
+
+    private ContentValues getValuesMacPrevio(Mac_previo mac_previo){
+        ContentValues values = new ContentValues();
+
+        //values.put(SQLHelper.ID_MAC_PREVIO, mac_previo.id);
+        values.put(SQLHelper.IMPLANTE, mac_previo.implante);
+        values.put(SQLHelper.DIU, mac_previo.diu);
+        values.put(SQLHelper.ORAL, mac_previo.oral);
+        values.put(SQLHelper.INYECTABLE, mac_previo.inyectable);
+        values.put(SQLHelper.BARRERA, mac_previo.barrera);
+
+        return values;
+    }
+
+    public boolean addMacPrevio(Mac_previo mac_previo){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = getValuesMacPrevio(mac_previo);
+
+        last_id = db.insert(SQLHelper.NOMBRE_TABLA_MAC_PREVIO, null, values);
+        return (last_id != -1);
+    }
 
 
     private List<Zona> getAllZonaFromOtraZona(int id_otra_zona, String nombre_tabla, String nombre_id_otra_tabla_fk){
@@ -307,7 +412,7 @@ public class DbHelper extends SQLiteOpenHelper {
                 int id_antecedente_fk = cursor.getInt(8);
                 int id_paraje_fk = cursor.getInt(9);
 
-                Pacientes paciente = new Pacientes(id, nombre, apellido, documento, fecha_nacimiento, origen, nacionalidad, num_vivienda, id_antecedente_fk, id_paraje_fk);
+                Pacientes paciente = new Pacientes(nombre, apellido, documento, fecha_nacimiento, origen, nacionalidad, num_vivienda, id_antecedente_fk, id_paraje_fk, id);
                 pacientes.add(paciente);
             } while (cursor.moveToNext());
         }
@@ -318,6 +423,9 @@ public class DbHelper extends SQLiteOpenHelper {
     }
 
     public List<Controles> getControlesFromPaciente(int id_paciente){
+        System.out.println("CONTROLESSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
+        System.out.println("ID PACIENTE: " + id_paciente);
+        System.out.println("ID_PACIENTE_FK: " + SQLHelper.ID_PACIENTE_CONTROL_FK );
         List<Controles> controles = new ArrayList<>();
 
         String selectQuery = "SELECT * FROM " + SQLHelper.NOMBRE_TABLA_CONTROLES + " WHERE " + SQLHelper.ID_PACIENTE_CONTROL_FK + " = " + id_paciente;
@@ -329,26 +437,29 @@ public class DbHelper extends SQLiteOpenHelper {
             do {
                 int id = cursor.getInt(0);
                 int edad_gestacional = cursor.getInt(1);
-                int ecografia = cursor.getInt(2);
+                String ecografia = cursor.getString(2);
                 int hpv = cursor.getInt(3);
                 int pap = cursor.getInt(4);
                 int a_gripal = cursor.getInt(5);
                 int tba_inmunizacion = cursor.getInt(6);
-                int db_inmunizacion = cursor.getInt(7);
-                int vhb_inmunizacion = cursor.getInt(8);
+                String db_inmunizacion = cursor.getString(7);
+                String vhb_inmunizacion = cursor.getString(8);
                 String control_clinico = cursor.getString(9);
                 float tension_arterial = cursor.getFloat(10);
                 String observaciones = cursor.getString(11);
-                int id_sereologia_fk = cursor.getInt(12);
-                int id_paciente_control_fk = cursor.getInt(13);
+                //int id_sereologia_fk = cursor.getInt(12);
+                int id_paciente_control_fk = cursor.getInt(12);
 
-                Controles control = new Controles(id, edad_gestacional, ecografia, hpv, pap, a_gripal, tba_inmunizacion, db_inmunizacion, vhb_inmunizacion, control_clinico, tension_arterial, observaciones, id_sereologia_fk, id_paciente_control_fk);
+                //Sereologias sereologia = getAllSereologiaFromControles(id).get(0);
+                Controles control = new Controles(id, edad_gestacional,ecografia, hpv, pap, a_gripal,tba_inmunizacion, db_inmunizacion, vhb_inmunizacion, control_clinico, tension_arterial, observaciones, id_paciente_control_fk);
                 controles.add(control);
             } while (cursor.moveToNext());
         }
 
         cursor.close();
         db.close();
+
+        System.out.println(controles.size());
         return controles;
     }
 
@@ -366,10 +477,10 @@ public class DbHelper extends SQLiteOpenHelper {
 
     */
     
-    public List<Sereologias> getAllSereologiaFromControles(int id_control){
-        List<Sereologias> sereologias = new ArrayList<>();
+    public Sereologias getAllSereologiaFromControles(int id_control){
+        Sereologias sereologias = null;
 
-        String selectQuery = "SELECT * FROM " + SQLHelper.NOMBRE_TABLA_SEROLOGIAS + " WHERE " + SQLHelper.ID_SEROLOGIA_FK + " = " + id_control;
+        String selectQuery = "SELECT * FROM " + SQLHelper.NOMBRE_TABLA_SEROLOGIAS + " WHERE " + SQLHelper.ID_CONTROL_FK + " = " + id_control;
 
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -377,17 +488,18 @@ public class DbHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 int id = cursor.getInt(0);
-                int sifilis = cursor.getInt(1);
-                int hiv = cursor.getInt(2);
-                int chagas = cursor.getInt(3);
-                int vhb = cursor.getInt(4);
-                int gas = cursor.getInt(5);
+                String sifilis = cursor.getString(1);
+                String hiv = cursor.getString(2);
+                String chagas = cursor.getString(3);
+                String vhb = cursor.getString(4);
+                String gas = cursor.getString(5);
                 String hb = cursor.getString(6);
                 String glucemia = cursor.getString(7);
                 String grupo_factor = cursor.getString(8);
+                int id_control_fk = cursor.getInt(9);
 
-                Sereologias sereologia = new Sereologias(id, sifilis, hiv, chagas, vhb, gas, hb, glucemia, grupo_factor);
-                sereologias.add(sereologia);
+                Sereologias sereologia = new Sereologias(id, sifilis, hiv, chagas, vhb, gas, hb, glucemia, grupo_factor, id_control_fk);
+                sereologias = sereologia;
             } while (cursor.moveToNext());
         }
     
@@ -412,10 +524,13 @@ public class DbHelper extends SQLiteOpenHelper {
     public String id_app_fk;
     */
 
-    public List<Antecedentes> getAllAntecedentesFromPaciente(int id_paciente){
-        List<Antecedentes> antecedentes = new ArrayList<>();
+    // paciente tiene la fk de un antecedente y este es el que debo retornar
 
-        String selectQuery = "SELECT * FROM " + SQLHelper.NOMBRE_TABLA_ANTECEDENTES + " WHERE " + SQLHelper.ID_ANTECEDENTE_FK + " = " + id_paciente;
+
+    public Antecedentes getAntecedente(int id_antecedente){
+        Antecedentes antecedentes = null;
+
+        String selectQuery = "SELECT * FROM " + SQLHelper.NOMBRE_TABLA_ANTECEDENTES + " WHERE " + SQLHelper.ID_ANTECEDENTE + " = " + id_antecedente;
 
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -435,8 +550,7 @@ public class DbHelper extends SQLiteOpenHelper {
                 int id_mac_previo_fk = cursor.getInt(10);
                 int id_app_fk = cursor.getInt(11);
 
-                Antecedentes antecedente = new Antecedentes(id, edad_primer_parto, gestaciones, partos, ceseareas, abortos, emabarazo_planificado, fecha_ultima_menstruacion, fecha_ultimo_parto, parto_estimado, id_mac_previo_fk, id_app_fk);
-                antecedentes.add(antecedente);
+                antecedentes = new Antecedentes(id, edad_primer_parto, gestaciones, partos, ceseareas, abortos, emabarazo_planificado, fecha_ultima_menstruacion, fecha_ultimo_parto, parto_estimado, id_mac_previo_fk, id_app_fk);
             } while (cursor.moveToNext());
         }
 
@@ -444,5 +558,217 @@ public class DbHelper extends SQLiteOpenHelper {
         db.close();
         return antecedentes;
     }
-    
+    /*
+    LA CLASE APP TIENE:
+    public int id_app;
+    public boolean hta_gestacional;
+    public boolean hta_dbt_gestacional;
+    public boolean toxoplasmosis;
+    public boolean tbc;
+    public boolean sifilis;
+    public boolean chagas;
+    public boolean dbt;
+    */
+
+    public App getApp(int id_app){
+        App app = null;
+
+        String selectQuery = "SELECT * FROM " + SQLHelper.NOMBRE_TABLA_APP + " WHERE " + SQLHelper.ID_APP + " = " + id_app;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()) {
+            do {
+                //int id_app = cursor.getInt(0);
+                boolean hta_gestacional = cursor.getInt(1) == 1;
+                boolean hta_dbt_gestacional = cursor.getInt(2) == 1;
+                boolean toxoplasmosis = cursor.getInt(3) == 1;
+                boolean tbc = cursor.getInt(4) == 1;
+                boolean sifilis = cursor.getInt(5) == 1;
+                boolean chagas = cursor.getInt(6) == 1;
+                boolean dbt = cursor.getInt(7) == 1;
+
+                app = new App(hta_gestacional, hta_dbt_gestacional, toxoplasmosis, tbc, sifilis, chagas, dbt, id_app);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return app;
+    }
+    /*
+    LA CLASE MAC_PREVIO TIENE:
+    public int id_mac_previo;
+    public boolean implante;
+    public boolean diu;
+    public boolean oral;
+    public boolean inyectable;
+    public boolean barrera;
+    */
+
+    public Mac_previo getMacPrevio(int id_mac_previo){
+        Mac_previo mac_previo = null;
+
+        String selectQuery = "SELECT * FROM " + SQLHelper.NOMBRE_TABLA_MAC_PREVIO + " WHERE " + SQLHelper.ID_MAC_PREVIO + " = " + id_mac_previo;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()) {
+            do {
+                //int id_mac_previo = cursor.getInt(0);
+                boolean implante = cursor.getInt(1) == 1;
+                boolean diu = cursor.getInt(2) == 1;
+                boolean oral = cursor.getInt(3) == 1;
+                boolean inyectable = cursor.getInt(4) == 1;
+                boolean barrera = cursor.getInt(5) == 1;
+
+                mac_previo = new Mac_previo(implante, diu, oral, inyectable, barrera, id_mac_previo);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return mac_previo;
+    }
+
+    /* 
+    LA CLASE CONTROLES TIENE:
+    public int id;
+    public int edad_gestacional;
+    public String ecografia;
+    public boolean hpv;
+    public boolean pap;
+    public boolean a_gripal;
+    public boolean tba_inmunizacion;
+    public String db_inmunizacion;
+    public String vhb_inmunizacion;
+    public String control_clinico;
+    public float tension_arterial;
+    public String observaciones;
+    public int id_paciente_control_fk;
+    */
+
+    public Controles getControl(int id_control){
+        Controles control = null;
+
+        String selectQuery = "SELECT * FROM " + SQLHelper.NOMBRE_TABLA_CONTROLES + " WHERE " + SQLHelper.ID_CONTROL + " = " + id_control;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()) {
+            do {
+                int id = cursor.getInt(0);
+                int edad_gestacional = cursor.getInt(1);
+                String ecografia = cursor.getString(2);
+                boolean hpv = cursor.getInt(3) == 1;
+                boolean pap = cursor.getInt(4) == 1;
+                boolean a_gripal = cursor.getInt(5) == 1;
+                boolean tba_inmunizacion = cursor.getInt(6) == 1;
+                String db_inmunizacion = cursor.getString(7);
+                String vhb_inmunizacion = cursor.getString(8);
+                String control_clinico = cursor.getString(9);
+                float tension_arterial = cursor.getFloat(10);
+                String observaciones = cursor.getString(11);
+                int id_paciente_control_fk = cursor.getInt(12);
+
+                control = new Controles(id, edad_gestacional, ecografia, hpv, pap, a_gripal, tba_inmunizacion, db_inmunizacion, vhb_inmunizacion, control_clinico, tension_arterial, observaciones, id_paciente_control_fk);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return control;
+    }
+
+
+    public Pacientes getPaciente(int id_paciente){
+        Pacientes paciente = null;
+
+        String selectQuery = "SELECT * FROM " + SQLHelper.NOMBRE_TABLA_PACIENTES + " WHERE " + SQLHelper.ID_PACIENTE + " = " + id_paciente;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()) {
+            do {
+                int id = cursor.getInt(0);
+                String nombre = cursor.getString(1);
+                String apellido = cursor.getString(2);
+                int documento = cursor.getInt(3);
+                String fecha_nacimiento = cursor.getString(4);
+                String origen = cursor.getString(5);
+                String nacionalidad = cursor.getString(6);
+                int num_vivienda = cursor.getInt(7);
+                int id_antecedente_fk = cursor.getInt(8);
+                int id_paraje_fk = cursor.getInt(9);
+
+                paciente = new Pacientes(nombre, apellido, documento, fecha_nacimiento, origen, nacionalidad, num_vivienda, id_antecedente_fk, id_paraje_fk,id);
+                break;
+            }
+            while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return paciente;
+    }
+
+    public void UpdatePaciente(int id_paciente, Pacientes paciente){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = getValuesPaciente(paciente);
+
+        db.update(SQLHelper.NOMBRE_TABLA_PACIENTES, values, SQLHelper.ID_PACIENTE + " = ?", new String[]{String.valueOf(id_paciente)});
+        db.close();
+    }
+
+    public void UpdateControl(int id_control, Controles control){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = getValuesControl(control);
+
+        db.update(SQLHelper.NOMBRE_TABLA_CONTROLES, values, SQLHelper.ID_CONTROL + " = ?", new String[]{String.valueOf(id_control)});
+        db.close();
+    }
+
+    public void UpdateSereologia(int id_sereologia, Sereologias sereologia){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = getValuesSereologia(sereologia);
+
+        db.update(SQLHelper.NOMBRE_TABLA_SEROLOGIAS, values, SQLHelper.ID_SEROLOGIA + " = ?", new String[]{String.valueOf(id_sereologia)});
+        db.close();
+    }
+
+    public void UpdateAntecedente(int id_antecedente, Antecedentes Antecedente){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = getValuesAntecedente(Antecedente);
+
+        db.update(SQLHelper.NOMBRE_TABLA_ANTECEDENTES, values, SQLHelper.ID_ANTECEDENTE + " = ?", new String[]{String.valueOf(id_antecedente)});
+        db.close();
+    }
+
+    public void UpdateMacPrevio(int id_mac_previo, Mac_previo mac_previo){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = getValuesMacPrevio(mac_previo);
+
+        db.update(SQLHelper.NOMBRE_TABLA_MAC_PREVIO, values, SQLHelper.ID_MAC_PREVIO + " = ?", new String[]{String.valueOf(id_mac_previo)});
+        db.close();
+    }
+
+    public void UpdateApp(int id_app, App app){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = getValuesApp(app);
+
+        db.update(SQLHelper.NOMBRE_TABLA_APP, values, SQLHelper.ID_APP + " = ?", new String[]{String.valueOf(id_app)});
+        db.close();
+    }
+
+
+
+
+
+    public int getLastInsertedId(){
+        return (int) last_id;
+    }
 }
