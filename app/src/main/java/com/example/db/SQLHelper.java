@@ -268,6 +268,7 @@ public class SQLHelper {
     public static final String TENSION_ARTERIAL = "tension_arterial";
     public static final String OBSERVACIONES = "observaciones";
     public static final String ID_PACIENTE_CONTROL_FK = "id_paciente_control_fk";
+    public static final String FECHA_CONTROL = "fecha_control";
 
     public static final String CREAR_TABLA_CONTROLES = " CREATE TABLE " +
             NOMBRE_TABLA_CONTROLES+ " ("+
@@ -284,6 +285,7 @@ public class SQLHelper {
                 TENSION_ARTERIAL + " FLOAT NOT NULL, "+
                 OBSERVACIONES +" LONGVARCHAR, "+
                 ID_PACIENTE_CONTROL_FK +" INTEGER NOT NULL, "+
+                FECHA_CONTROL + " DATE NOT NULL, " +
                 " CONSTRAINT "+ ID_CONTROL +" PRIMARY KEY ("+ID_CONTROL+"), "+
                 " FOREIGN KEY ("+ID_PACIENTE_CONTROL_FK+") REFERENCES "+NOMBRE_TABLA_PACIENTES+" ("+ID_PACIENTE+")"+
             "); ";

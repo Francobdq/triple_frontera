@@ -54,8 +54,7 @@ public class Ingresar_embarazada extends AppCompatActivity {
     EditText ultimo_parto, ultima_menstruacion, parto_estimado;
     CheckBox cb_implante, cb_diu, cb_oral, cb_inyectable, cb_barrera;
     CheckBox cb_hta_gestacional, cb_hta_dbt_gestacional, cb_toxoplasmosis, cb_sifilis, cb_chagas, cb_dbt, cb_tbc;
-    int[] id_controles;
-    Spinner controles,hijos;
+    Spinner hijos;
     ImageButton edit_control, edit_hijo;
     ImageButton add_control, add_hijo;
 
@@ -73,7 +72,10 @@ public class Ingresar_embarazada extends AppCompatActivity {
     int id_paciente = -1;
     Pacientes paciente;
 
+    boolean editable;
     IngresarControl ingresarControl;
+
+    SpinnerControl sp_control;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,22 +90,28 @@ public class Ingresar_embarazada extends AppCompatActivity {
         paraje_elegido = intent.getStringExtra("paraje_elegido");
         id_paraje = intent.getIntExtra("pais_elegido", -1); //if it's a string you stored.
         id_paciente = intent.getIntExtra("id_paciente", -1);
+        editable = intent.getBooleanExtra("editable", false);
 
         checkInterfaz();
         inicializarElementos();
         inicializarSpinners();
         actualizarHeader();
-
-        // si el id paciente es distinto de -1 significa que quiero cargar los datos del paciente en todos los elementos.
-        if (id_paciente != -1){
-            cargarDatosPrevios();
-        }
-        localizacion.SeleccionManual(pais_elegido, area_operativa_elegida, paraje_elegido);
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     public void OnResume() {
         localizacion.SeleccionManual(pais_elegido, area_operativa_elegida, paraje_elegido);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // si el id paciente es distinto de -1 significa que quiero cargar los datos del paciente en todos los elementos.
+        if (id_paciente != -1){
+            cargarDatosPrevios();
+        }
+        localizacion.SeleccionManual(pais_elegido, area_operativa_elegida, paraje_elegido);
+
     }
 
     private void checkInterfaz(){
@@ -221,7 +229,7 @@ public class Ingresar_embarazada extends AppCompatActivity {
         cb_dbt = (CheckBox) findViewById(R.id.cb_dbt);
         cb_tbc = (CheckBox) findViewById(R.id.cb_tbc);
 
-        controles = (Spinner) findViewById(R.id.sp_edit_controles);
+
         hijos = (Spinner) findViewById(R.id.sp_edit_hijos);
         edit_control = (ImageButton) findViewById(R.id.ib_edit_control);
         edit_hijo = (ImageButton) findViewById(R.id.ib_edit_hijo);
@@ -229,6 +237,33 @@ public class Ingresar_embarazada extends AppCompatActivity {
         add_hijo = (ImageButton) findViewById(R.id.ib_add_hijo);
 
         guardar = (Button) findViewById(R.id.btn_guardar_embarazada);
+
+        Spinner controles = (Spinner) findViewById(R.id.sp_edit_controles);
+        sp_control = new SpinnerControl(controles,Ingresar_embarazada.this);
+
+        ultima_menstruacion.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                //System.out.println(s.toString() + " " + start + " " + count + " " + after);
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                //System.out.println(s.toString() + " " + start + " " + count);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String str_parto_estimado = "--/--/----";
+
+                int[] fecha_format = Antecedentes.format_fecha(s.toString());
+
+                if(fecha_format[0] != -1){
+                    str_parto_estimado = Antecedentes.calcularPartoEstimado(fecha_format[0], fecha_format[1], fecha_format[2]);
+                }
+                parto_estimado.setText(str_parto_estimado);
+            }
+        });
     }
 
 
@@ -300,7 +335,7 @@ public class Ingresar_embarazada extends AppCompatActivity {
 
         return new Antecedentes(0, Integer.parseInt(str_edad_primer_parto),Integer.parseInt(str_gestaciones),
                 Integer.parseInt(str_edad_primer_parto),Integer.parseInt(str_cesareas), Integer.parseInt(str_abortos),embarazo_planificado_si,
-                str_ultima_menstruacion,str_ultimo_parto, "",id_mac,id_app);
+                str_ultima_menstruacion,str_ultimo_parto, str_parto_estimado,id_mac,id_app);
 
     }
     private Pacientes obtenerDatos(int id_antecedente, int id_paraje){
@@ -352,17 +387,17 @@ q       */
             return;
         }
         LayoutInflater inflater = getLayoutInflater();
-        ingresarControl = new IngresarControl(Ingresar_embarazada.this, id_paciente, inflater);
+        ingresarControl = new IngresarControl(Ingresar_embarazada.this, id_paciente, inflater, editable);
     }
 
 
     public void guardarNuevoControl(View view){
-        if(ingresarControl == null){
+        if(ingresarControl == null) {
             Toast.makeText(this, "a", Toast.LENGTH_SHORT).show();
             return;
         }
-
-        ingresarControl.guardarNuevoControl(view);
+        ingresarControl.guardar();
+        sp_control.actualizarDatosControlDB(id_paciente);
     }
 
 
@@ -428,36 +463,72 @@ q       */
         cb_dbt.setChecked(app.dbt);
 
 
-        // ahora cargo los controles en el spinner
-        if (controles.size() > 0){
-            // cargo el spinner
-            String[] nombres_controles = new String[controles.size()];
-            id_controles = new int[controles.size()];
-            for (int i = 0; i < controles.size(); i++){
-                nombres_controles[i] = String.valueOf(controles.get(i).id);
-                id_controles[i] = controles.get(i).id;
-            }
+        sp_control.cargarDatosEnSpinner(controles);
 
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, nombres_controles);
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            this.controles.setAdapter(adapter);
-            this.controles.setSelection(controles.size()-1);
-        }
+        if(editable)
+            return;
 
 
+        // y hago que no se puedan editar ningun dato
+        nombre.setEnabled(false);
+        apellido.setEnabled(false);
+        documento.setEnabled(false);
+        fecha_de_nacimiento.setEnabled(false);
+        numero_de_vivienda.setEnabled(false);
+        origen.setEnabled(false);
+        nacionalidad.setEnabled(false);
 
+        // ahora los antecedentes
+        edad_primer_parto.setEnabled(false);
+        gestaciones.setEnabled(false);
+        partos.setEnabled(false);
+        cesareas.setEnabled(false);
+        abortos.setEnabled(false);
+        ultimo_parto.setEnabled(false);
+        ultima_menstruacion.setEnabled(false);
+        parto_estimado.setEnabled(false);
+        rb_embarazo_planificado_si.setEnabled(false);
+        rb_embarazo_planificado_no.setEnabled(false);
 
+        // ahora la mac previo
+        cb_implante.setEnabled(false);
+        cb_diu.setEnabled(false);
+        cb_oral.setEnabled(false);
+        cb_inyectable.setEnabled(false);
+        cb_barrera.setEnabled(false);
+        
+        // ahora la app
+        cb_hta_gestacional.setEnabled(false);
+        cb_hta_dbt_gestacional.setEnabled(false);
+        cb_toxoplasmosis.setEnabled(false);
+        cb_tbc.setEnabled(false);
+        cb_sifilis.setEnabled(false);
+        cb_chagas.setEnabled(false);
+        cb_dbt.setEnabled(false);
+
+        localizacion.makeEditable(false);
     }
 
 
     public void editControl(View view){
-        if(ingresarControl != null){
-
-            // obtengo el index de la seleccion actual del spinner controles
-            int index = controles.getSelectedItemPosition();
-
-            ingresarControl.editControl(view, id_controles[index]);
+        if(sp_control.getLength() <= 0){
+            Toast.makeText(this, "No hay controles para editar. Cree uno nuevo.", Toast.LENGTH_SHORT).show();
+            return;
         }
+
+        LayoutInflater inflater = getLayoutInflater();
+        ingresarControl = new IngresarControl(Ingresar_embarazada.this, id_paciente, inflater, editable);
+
+        // obtengo el index de la seleccion actual del spinner controles
+        int index = sp_control.indexSelectedItem();
+
+        if(index == -1){
+            Toast.makeText(this, "Debe seleccionar un control para poder editarlo.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        
+        ingresarControl.editControl(view, sp_control.getId(index));
+
     }
 
     public void addHijo(View view){}
@@ -487,6 +558,11 @@ q       */
     }
 
     public void guardar(View view){
+        if(!editable){
+            Toast.makeText(this, "No se puede guardar una embarazada que no se encuentra editable", Toast.LENGTH_LONG).show();
+            return;
+        }
+
         // obtengo los datos
         id_paraje = localizacion.getId_paraje();
         App app_paciente = obtenerDatosAPP();
@@ -502,7 +578,6 @@ q       */
         // si el paciente ya fue cargado entonces tengo que actualizar los datos editados
         if (id_paciente != -1){
             Actualizar(app_paciente, mac_previo, antecedentes, nuevoPaciente);
-            return;
         }
         else{
             // en caso contrario tengo que guardar los datos en la base de datos

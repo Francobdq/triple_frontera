@@ -55,9 +55,10 @@
                     android:id="@+id/textView8"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
                     android:text="Edad gestacional"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toBottomOf="@+id/et_nc_fecha_control" />
 
                 <EditText
                     android:id="@+id/et_nc_edad_gestacional"
@@ -355,6 +356,25 @@
                         android:layout_height="wrap_content"
                         android:text="Patologico" />
                 </RadioGroup>
+
+                <TextView
+                    android:id="@+id/tv_fecha_control"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Fecha de control"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <EditText
+                    android:id="@+id/et_nc_fecha_control"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:ems="10"
+                    android:inputType="datetime"
+                    android:minHeight="48dp"
+                    app:layout_constraintStart_toStartOf="@+id/tv_fecha_control"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_fecha_control" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
     </ScrollView>
@@ -758,19 +778,18 @@
 
                 <EditText
                     android:id="@+id/et_nc_tension_arterial"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:ems="10"
-                    android:inputType="textPersonName"
+                    android:inputType="number|numberDecimal"
                     android:minHeight="48dp"
-                    android:text="                    -/-                   "
                     app:layout_constraintStart_toStartOf="@+id/textView50"
                     app:layout_constraintTop_toBottomOf="@+id/textView50" />
 
                 <EditText
                     android:id="@+id/et_nc_observaciones"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:ems="10"

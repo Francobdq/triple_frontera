@@ -135,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-        Controles control = new Controles( 0,0, "SI", 0, 0, 0,  0, "SI", "SI","NORMAL",0f,0);
+        Controles control = new Controles( 0,0, "SI", 0, 0, 0,  0, "SI", "SI","NORMAL",0f,0,"22/10/2020");
         db.addControl(control);
 
         Sereologias sereologia1 = new Sereologias(0,"","","","","","10","glucemia","+0", db.getLastInsertedId());

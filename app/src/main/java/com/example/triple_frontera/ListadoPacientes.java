@@ -1,6 +1,8 @@
 package com.example.triple_frontera;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.OnLifecycleEvent;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -17,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.db.DbHelper;
+import com.example.db.entidades.Antecedentes;
 import com.example.db.entidades.Controles;
 import com.example.db.entidades.Pacientes;
 import com.example.db.entidades.Sereologias;
@@ -26,7 +29,6 @@ import java.util.List;
 public class ListadoPacientes extends AppCompatActivity {
 
     String[] pacientes;
-    int[] id_controles;
 
     EditText buscar_paciente;
     ListView list_pacientes;
@@ -49,8 +51,6 @@ public class ListadoPacientes extends AppCompatActivity {
     TextView fecha_de_nacimiento;
 
 
-    Spinner sp_controles;
-
     TextView estado;
     TextView edad_gestacional;
     TextView eco;
@@ -64,6 +64,8 @@ public class ListadoPacientes extends AppCompatActivity {
     TextView hb;
     TextView glucemia;
     TextView grupo_y_factor;
+
+    SpinnerControl sp_controles;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +87,7 @@ public class ListadoPacientes extends AppCompatActivity {
         fecha_de_nacimiento = (TextView)findViewById(R.id.di_fecha_de_nacimiento_tv);
 
 
-        sp_controles = (Spinner)findViewById(R.id.sp_controles);
+
 
         estado = (TextView)findViewById(R.id.tb_estado_tv);
         edad_gestacional = (TextView)findViewById(R.id.tb_edad_gestacional_tv);
@@ -106,6 +108,15 @@ public class ListadoPacientes extends AppCompatActivity {
         area_operativa_elegida = intent.getStringExtra("area_operativa_elegida");
         paraje_elegido = intent.getStringExtra("paraje_elegido");
         id_paraje = intent.getIntExtra("id_paraje", -1);
+
+        Spinner controles = (Spinner)findViewById(R.id.sp_controles);
+        sp_controles = new SpinnerControl(controles,ListadoPacientes.this);
+    }
+
+    @Override
+    protected void onStart()
+    {
+        super.onStart();
         DbHelper db = new DbHelper(ListadoPacientes.this);
 
 
@@ -121,27 +132,32 @@ public class ListadoPacientes extends AppCompatActivity {
             System.out.println(pacientes[i]);
         }
 
-        
-
-        
         listaPacientes();
         seleccionItemLista();
 
-        
+
         cargarControlesEnSpinner(db);
 
         db.close();
     }
 
-
-    public void irAEmbarazada(View view){
+    public void irAEmbarazada(boolean editable){
         Intent myIntent = new Intent(ListadoPacientes.this, Ingresar_embarazada.class);
         myIntent.putExtra("pais_elegido", pais_elegido);
         myIntent.putExtra("area_operativa_elegida", area_operativa_elegida);
         myIntent.putExtra("paraje_elegido", paraje_elegido);
         myIntent.putExtra("id_paraje", id_paraje);
         myIntent.putExtra("id_paciente", id_paciente_seleccionado);
+        myIntent.putExtra("editable", editable);
         ListadoPacientes.this.startActivity(myIntent);
+    }
+
+    public void editarEmbarazada(View view){
+        irAEmbarazada(true);
+    }
+
+    public void verEmbarazada(View view){
+        irAEmbarazada(false);
     }
 
     private void listaPacientes(){
@@ -200,35 +216,26 @@ public class ListadoPacientes extends AppCompatActivity {
     private void cargarControlesEnSpinner(DbHelper db){
 
         List<Controles> controles_ob = db.getControlesFromPaciente(id_paciente_seleccionado);
-        String[] controles = new String[controles_ob.size()];
-        int[] id_controles = new int[controles_ob.size()];
-        System.out.println("cargarControlesEnSpinner----------------------------");
-        System.out.println(id_controles.length);
-        for (int i = 0; i < controles_ob.size(); i++) {
-            controles[i] = ""+controles_ob.get(i).id;
-            id_controles[i] = controles_ob.get(i).id;
-        }
+        sp_controles.cargarDatosEnSpinner(controles_ob);
 
-
-        ArrayAdapter adapter = new ArrayAdapter(this,R.layout.list_item,R.id.text,controles);
-        sp_controles.setAdapter(adapter);
+        Pacientes paciente = db.getPaciente(id_paciente_seleccionado);
         
         sp_controles.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                cargarDatosDeControl(controles_ob.get(position), db.getAllSereologiaFromControles(id_controles[position])); // el id es auxiliar se debe buscar el id del control
+                cargarDatosDeControl(controles_ob.get(position),db.getAntecedente(paciente.id_antecedente_fk), db.getAllSereologiaFromControles(sp_controles.getId(position))); // el id es auxiliar se debe buscar el id del control
             }
         
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
                 // selecciono el primer control del spinner
-                sp_controles.setSelection(0);
+
             }
         
         });
     }
 
-    private void cargarDatosDeControl(Controles control, Sereologias sereologia){
+    private void cargarDatosDeControl(Controles control, Antecedentes antecedente, Sereologias sereologia){
         if(control == null){
             Toast.makeText(getApplicationContext(), "No existe el control", Toast.LENGTH_SHORT).show();
             return;
@@ -237,7 +244,7 @@ public class ListadoPacientes extends AppCompatActivity {
         estado.setText("AGREGAR");
         edad_gestacional.setText(""+control.edad_gestacional);
         eco.setText(""+control.ecografia);
-        fpp.setText("fecha probable parto");
+        fpp.setText(""+antecedente.parto_estimado);
         control_clinico.setText(""+control.control_clinico);
 
 

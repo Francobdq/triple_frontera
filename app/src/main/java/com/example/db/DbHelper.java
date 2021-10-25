@@ -36,7 +36,7 @@ import java.util.List;
 
 
 public class DbHelper extends SQLiteOpenHelper {
-    private static final int DATABASE_VERSION = 15;
+    private static final int DATABASE_VERSION = 16;
     private static final String DATABASE_NAME = "triple_frontera.db";
 
     private static long last_id = -1;
@@ -117,12 +117,12 @@ public class DbHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
 
         //values.put(SQLHelper.ID_PACIENTE, paciente.id);
-        values.put(SQLHelper.NOMBRE_PACIENTE, paciente.nombre);
-        values.put(SQLHelper.APELLIDO_PACIENTE, paciente.apellido);
+        values.put(SQLHelper.NOMBRE_PACIENTE, paciente.nombre.toUpperCase());
+        values.put(SQLHelper.APELLIDO_PACIENTE, paciente.apellido.toUpperCase());
         values.put(SQLHelper.DOCUMENTO_PACIENTE, paciente.documento);
         values.put(SQLHelper.FECHA_DE_NACIMIENTO_PACIENTE, paciente.fecha_de_nacimiento);
-        values.put(SQLHelper.ORIGEN_PACIENTE, paciente.origen);
-        values.put(SQLHelper.NACIONALIDAD_PACIENTE, paciente.nacionalidad);
+        values.put(SQLHelper.ORIGEN_PACIENTE, paciente.origen.toUpperCase());
+        values.put(SQLHelper.NACIONALIDAD_PACIENTE, paciente.nacionalidad.toUpperCase());
         values.put(SQLHelper.NUM_VIVIENDA_PACIENTE, paciente.num_vivienda);
         values.put(SQLHelper.ID_ANTECEDENTE_FK, paciente.id_antecedente_fk);
         values.put(SQLHelper.ID_PARAJE_FK, paciente.id_paraje_fk);
@@ -174,8 +174,9 @@ public class DbHelper extends SQLiteOpenHelper {
         values.put(SQLHelper.VHB_INMUNIZACION, control.vhb_inmunizacion);
         values.put(SQLHelper.CONTROL_CLINICO, control.control_clinico);
         values.put(SQLHelper.TENSION_ARTERIAL, control.tension_arterial);
-        values.put(SQLHelper.OBSERVACIONES, control.observaciones);
+        values.put(SQLHelper.OBSERVACIONES, control.observaciones.toUpperCase());
         values.put(SQLHelper.ID_PACIENTE_CONTROL_FK, control.id_paciente_control_fk);
+        values.put(SQLHelper.FECHA_CONTROL, control.fecha_control);
 
         return values;
     }
@@ -449,9 +450,10 @@ public class DbHelper extends SQLiteOpenHelper {
                 String observaciones = cursor.getString(11);
                 //int id_sereologia_fk = cursor.getInt(12);
                 int id_paciente_control_fk = cursor.getInt(12);
+                String fecha_control = cursor.getString(13);
 
                 //Sereologias sereologia = getAllSereologiaFromControles(id).get(0);
-                Controles control = new Controles(id, edad_gestacional,ecografia, hpv, pap, a_gripal,tba_inmunizacion, db_inmunizacion, vhb_inmunizacion, control_clinico, tension_arterial, observaciones, id_paciente_control_fk);
+                Controles control = new Controles(id, edad_gestacional,ecografia, hpv, pap, a_gripal,tba_inmunizacion, db_inmunizacion, vhb_inmunizacion, control_clinico, tension_arterial, observaciones, id_paciente_control_fk, fecha_control);
                 controles.add(control);
             } while (cursor.moveToNext());
         }
@@ -558,6 +560,7 @@ public class DbHelper extends SQLiteOpenHelper {
         db.close();
         return antecedentes;
     }
+
     /*
     LA CLASE APP TIENE:
     public int id_app;
@@ -673,8 +676,9 @@ public class DbHelper extends SQLiteOpenHelper {
                 float tension_arterial = cursor.getFloat(10);
                 String observaciones = cursor.getString(11);
                 int id_paciente_control_fk = cursor.getInt(12);
+                String fecha_control = cursor.getString(13);
 
-                control = new Controles(id, edad_gestacional, ecografia, hpv, pap, a_gripal, tba_inmunizacion, db_inmunizacion, vhb_inmunizacion, control_clinico, tension_arterial, observaciones, id_paciente_control_fk);
+                control = new Controles(id, edad_gestacional, ecografia, hpv, pap, a_gripal, tba_inmunizacion, db_inmunizacion, vhb_inmunizacion, control_clinico, tension_arterial, observaciones, id_paciente_control_fk, fecha_control);
             } while (cursor.moveToNext());
         }
 

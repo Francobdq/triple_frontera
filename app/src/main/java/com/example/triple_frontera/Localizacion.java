@@ -188,6 +188,12 @@ public class Localizacion {
             }
         }
     }
+
+    public void makeEditable(boolean editable){
+        pais.setEnabled(editable);
+        area_operativa.setEnabled(editable);
+        paraje.setEnabled(editable);
+    }
     
 
     /* GETTERS */

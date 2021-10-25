@@ -19,7 +19,7 @@ import com.example.db.entidades.Sereologias;
 public class IngresarControl extends AppCompatActivity {
 
     // nuevo control
-    EditText et_nc_edad_gestacional;
+    EditText et_nc_edad_gestacional, et_nc_fecha_control;
     RadioButton rb_nc_ecografia_si, rb_nc_ecografia_no, rb_nc_ecografia_solicitada;
     RadioButton rb_nc_hpv_si,rb_nc_hpv_no, rb_nc_pap_si,rb_nc_pap_no, rb_nc_a_gripal_si,rb_nc_a_gripal_no, rb_nc_tba_si,rb_nc_tba_no;
     RadioButton rb_nc_db_previa, rb_nc_db_colocada,rb_nc_db_no, rb_nc_vhb_previa, rb_nc_vhb_colocada,rb_nc_vhb_no;
@@ -39,17 +39,19 @@ public class IngresarControl extends AppCompatActivity {
     LayoutInflater inflater;
 
     int id_control = -1;
+    boolean editable;
 
 
-    public IngresarControl(Context ctx, int id_paciente, LayoutInflater inflater){
+    public IngresarControl(Context ctx, int id_paciente, LayoutInflater inflater, boolean editable) {
         this.ctx = ctx;
         this.id_paciente = id_paciente;
         this.inflater = inflater;
+        this.editable = editable;
         abrirDialogControles();
     }
 
 
-    private void abrirDialogControles(){
+    public void abrirDialogControles(){
         AlertDialog.Builder alert = new AlertDialog.Builder(ctx, android.R.style.Theme_Material_Dialog_Alert);
 
         control_view = inflater.inflate(R.layout.control_dialog,null);
@@ -64,9 +66,10 @@ public class IngresarControl extends AppCompatActivity {
     }
 
     private void actualizarComponentesNuevoControl(){
-        // et : edad gestacional
+        // et : edad gestacional, fecha control
 
         et_nc_edad_gestacional = (EditText)control_view.findViewById(R.id.et_nc_edad_gestacional);
+        et_nc_fecha_control = (EditText)control_view.findViewById(R.id.et_nc_fecha_control);
         // rb [si, no, solicitada]: ecografia
 
         rb_nc_ecografia_si = (RadioButton)control_view.findViewById(R.id.rb_nc_ecografia_si);
@@ -111,7 +114,7 @@ public class IngresarControl extends AppCompatActivity {
         rb_nc_vhb_solicitado = (RadioButton)control_view.findViewById(R.id.rb_nc_vhb_solicitado);
         rb_nc_vhb_positivo = (RadioButton)control_view.findViewById(R.id.rb_nc_vhb_positivo);
         rb_nc_vhb_negativo = (RadioButton)control_view.findViewById(R.id.rb_nc_vhb_negativo);
-        rb_nc_vhb_no = (RadioButton)control_view.findViewById(R.id.rb_nc_vhb_no);
+        rb_nc_vhb_sereologia_no = (RadioButton)control_view.findViewById(R.id.rb_nc_vhb_sereologia_no);
         rb_nc_gas_solicitado = (RadioButton)control_view.findViewById(R.id.rb_nc_gas_solicitado);
         rb_nc_gas_positivo = (RadioButton)control_view.findViewById(R.id.rb_nc_gas_positivo);
         rb_nc_gas_negativo = (RadioButton)control_view.findViewById(R.id.rb_nc_gas_negativo);
@@ -222,6 +225,7 @@ public class IngresarControl extends AppCompatActivity {
 
     private Controles obtenerDatosControl(int id_paciente){
         String str_nc_edad_gestacional = et_nc_edad_gestacional.getText().toString();
+        String str_nc_fecha_control = et_nc_fecha_control.getText().toString();
         boolean out_rb_nc_ecografia_si = rb_nc_ecografia_si.isChecked();
         boolean out_rb_nc_ecografia_no = rb_nc_ecografia_no.isChecked();
         boolean out_rb_nc_hpv_si = rb_nc_hpv_si.isChecked();
@@ -249,7 +253,8 @@ public class IngresarControl extends AppCompatActivity {
                 (out_rb_nc_control_clinico_normal ? "NORMAL": "PATOLOGICO"),
                 Float.parseFloat(str_et_nc_tension_arterial),
                 str_et_nc_observaciones,
-                id_paciente
+                id_paciente,
+                str_nc_fecha_control
         );
     }
 
@@ -325,6 +330,7 @@ public class IngresarControl extends AppCompatActivity {
 
     private void setDatos(Controles control, Sereologias sereologia){
         et_nc_edad_gestacional.setText(String.valueOf(control.edad_gestacional));
+        et_nc_fecha_control.setText(control.fecha_control);
         tres_opciones(rb_nc_ecografia_si, rb_nc_ecografia_no, rb_nc_ecografia_solicitada, control.ecografia.equals("SI"), control.ecografia.equals("NO"));
         dos_opciones(rb_nc_hpv_si, rb_nc_hpv_no, control.hpv);
         dos_opciones(rb_nc_pap_si, rb_nc_pap_no, control.pap);
@@ -357,7 +363,73 @@ public class IngresarControl extends AppCompatActivity {
         actualizarComponentesNuevoControl();
         // cargo los datos guardados en la bdd a los componentes
         setDatos(control, sereologia);
+
+        // veo si lo puedo editar o no
+        if(!editable)
+            makeEditable(false);
+
     }
+
+    public void makeEditable(boolean editable){
+        et_nc_edad_gestacional.setEnabled(editable);
+        et_nc_fecha_control.setEnabled(editable);
+        rb_nc_ecografia_si.setEnabled(editable);
+        rb_nc_ecografia_no.setEnabled(editable);
+        rb_nc_ecografia_solicitada.setEnabled(editable);
+        rb_nc_hpv_si.setEnabled(editable);
+        rb_nc_hpv_no.setEnabled(editable);
+        rb_nc_pap_si.setEnabled(editable);
+        rb_nc_pap_no.setEnabled(editable);
+        rb_nc_a_gripal_si.setEnabled(editable);
+        rb_nc_a_gripal_no.setEnabled(editable);
+        rb_nc_tba_si.setEnabled(editable);
+        rb_nc_tba_no.setEnabled(editable);
+        rb_nc_db_previa.setEnabled(editable);
+        rb_nc_db_colocada.setEnabled(editable);
+        rb_nc_db_no.setEnabled(editable);
+        rb_nc_vhb_previa.setEnabled(editable);
+        rb_nc_vhb_colocada.setEnabled(editable);
+        rb_nc_vhb_no.setEnabled(editable);
+        rb_nc_control_clinico_normal.setEnabled(editable);
+        rb_nc_control_clinico_patologico.setEnabled(editable);
+        et_nc_tension_arterial.setEnabled(editable);
+        et_nc_observaciones.setEnabled(editable);
+        rb_nc_sifilis_solicitado.setEnabled(editable);
+        rb_nc_sifilis_positivo.setEnabled(editable);
+        rb_nc_sifilis_negativo.setEnabled(editable);
+        rb_nc_sifilis_no.setEnabled(editable);
+        rb_nc_hiv_solicitado.setEnabled(editable);
+        rb_nc_hiv_positivo.setEnabled(editable);
+        rb_nc_hiv_negativo.setEnabled(editable);
+        rb_nc_hiv_no.setEnabled(editable);
+        rb_nc_chagas_solicitado.setEnabled(editable);
+        rb_nc_chagas_positivo.setEnabled(editable);
+        rb_nc_chagas_negativo.setEnabled(editable);
+        rb_nc_chagas_no.setEnabled(editable);
+        rb_nc_vhb_solicitado.setEnabled(editable);
+        rb_nc_vhb_positivo.setEnabled(editable);
+        rb_nc_vhb_negativo.setEnabled(editable);
+        rb_nc_vhb_sereologia_no.setEnabled(editable);
+        rb_nc_gas_solicitado.setEnabled(editable);
+        rb_nc_gas_positivo.setEnabled(editable);
+        rb_nc_gas_negativo.setEnabled(editable);
+        rb_nc_gas_no.setEnabled(editable);
+        rb_nc_hb_solicitado.setEnabled(editable);
+        rb_nc_hb_no.setEnabled(editable);
+        rb_nc_hb_resultado.setEnabled(editable);
+        et_nc_hb_resultado.setEnabled(editable);
+        rb_nc_glucemia_solicitado.setEnabled(editable);
+        rb_nc_glucemia_no.setEnabled(editable);
+        rb_nc_glucemia_resultado.setEnabled(editable);
+        et_nc_glucemia_resultado.setEnabled(editable);
+        rb_nc_grupo_solicitado.setEnabled(editable);
+        rb_nc_grupo_no.setEnabled(editable);
+        rb_nc_grupo_resultado.setEnabled(editable);
+        et_nc_grupo_resultado.setEnabled(editable);
+
+        //btn_nc_guardar.setEnabled(editable);
+    }
+    
 
     private void guardarControlEditado(DbHelper db, Sereologias sereologias, Controles control){
         db.UpdateControl(id_control, control);
@@ -368,14 +440,19 @@ public class IngresarControl extends AppCompatActivity {
 
     private void guardarControlNuevo(DbHelper db, Sereologias sereologias, Controles control){
         db.addControl(control);
-        int id_control = db.getLastInsertedId();
+        id_control = db.getLastInsertedId();
         sereologias.id_control_fk = id_control;
         db.addSereologia(sereologias);
     }
 
-    public void guardarNuevoControl(View view){
+    public void guardar(){
         if (id_paciente == -1){
-            Toast.makeText(ctx, "No se ha seleccionado un paciente", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ctx, "No se ha seleccionado un paciente.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if(!editable){
+            Toast.makeText(ctx, "No se puede guardar un control que no es editable.", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -386,10 +463,12 @@ public class IngresarControl extends AppCompatActivity {
         Controles control = obtenerDatosControl(id_paciente);
 
         if (sereologias == null || control == null){
-            Toast.makeText(ctx, "Error al obtener datos", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ctx, "Error al obtener los datos.", Toast.LENGTH_SHORT).show();
             return;
         }
 
+        System.out.println("ingresar controllllllllllllllllllllllllllllllllllllllll");
+        System.out.println(control.fecha_control);
         // guardo los datos en la base de datos
         DbHelper db = new DbHelper(ctx);
 
@@ -404,6 +483,8 @@ public class IngresarControl extends AppCompatActivity {
         Toast.makeText(ctx, "Datos guardados correctamente.", Toast.LENGTH_SHORT).show();
 
     }
+
+
 
 
 
