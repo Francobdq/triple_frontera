@@ -56,6 +56,7 @@ public class ListadoPacientes extends AppCompatActivity {
     TextView eco;
     TextView fpp;
     TextView control_clinico;
+    TextView inmunizacion_agripal, inmunizacion_tba, inmunizacion_db, inmunizacion_vhb;
 
     TextView sifilis;
     TextView hiv;
@@ -94,6 +95,11 @@ public class ListadoPacientes extends AppCompatActivity {
         eco = (TextView)findViewById(R.id.tb_eco_tv);
         fpp = (TextView)findViewById(R.id.tb_fpp_tv);
         control_clinico = (TextView)findViewById(R.id.tb_control_clinico_tv);
+        inmunizacion_agripal = (TextView)findViewById(R.id.tb_inmunizacion_agripal_tv);
+        inmunizacion_tba = (TextView)findViewById(R.id.tb_inmunizacion_tba_tv);
+        inmunizacion_db = (TextView)findViewById(R.id.tb_inmunizacion_db_tv);
+        inmunizacion_vhb = (TextView)findViewById(R.id.tb_inmunizacion_vhb_tv);
+
 
         sifilis = (TextView)findViewById(R.id.tb_sifilis_tv);
         hiv = (TextView)findViewById(R.id.tb_hiv_tv);
@@ -219,7 +225,7 @@ public class ListadoPacientes extends AppCompatActivity {
         sp_controles.cargarDatosEnSpinner(controles_ob);
 
         Pacientes paciente = db.getPaciente(id_paciente_seleccionado);
-        
+        reiniciarDatosControl();
         sp_controles.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
@@ -229,10 +235,32 @@ public class ListadoPacientes extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
                 // selecciono el primer control del spinner
-
             }
         
         });
+    }
+
+    private void reiniciarDatosControl(){
+        estado.setText("-");
+        edad_gestacional.setText("-");
+        eco.setText("-");
+        fpp.setText("-");
+        control_clinico.setText("-");
+        // en el caso de las inmunizaciones simplemente escondo los elementos de la vista
+        inmunizacion_agripal.setVisibility(View.GONE);
+        inmunizacion_tba.setVisibility(View.GONE);
+        inmunizacion_db.setVisibility(View.GONE);
+        inmunizacion_vhb.setVisibility(View.GONE);
+
+
+        sifilis.setText("-");
+        hiv.setText("-");
+        chagas.setText("-");
+        vhb.setText("-");
+        hb.setText("-");
+        glucemia.setText("-");
+        grupo_y_factor.setText("-");
+
     }
 
     private void cargarDatosDeControl(Controles control, Antecedentes antecedente, Sereologias sereologia){
@@ -241,12 +269,16 @@ public class ListadoPacientes extends AppCompatActivity {
             return;
         }
 
-        estado.setText("AGREGAR");
+        estado.setText(antecedente.es_puerpera(25,10,2021));
         edad_gestacional.setText(""+control.edad_gestacional);
         eco.setText(""+control.ecografia);
         fpp.setText(""+antecedente.parto_estimado);
         control_clinico.setText(""+control.control_clinico);
 
+        inmunizacion_agripal.setVisibility((control.a_gripal)? View.VISIBLE: View.GONE);
+        inmunizacion_tba.setVisibility((control.tba_inmunizacion)?View.VISIBLE: View.GONE);
+        inmunizacion_db.setVisibility((control.inmunizacion_db()) ? View.VISIBLE : View.GONE);
+        inmunizacion_vhb.setVisibility((control.inmunizacion_vhb()) ? View.VISIBLE: View.GONE);
 
         if (sereologia == null){
             Toast.makeText(getApplicationContext(), "No existe la sereologia", Toast.LENGTH_SHORT).show();

@@ -252,6 +252,45 @@
                 android:padding="6dip"
                 android:text="Inmunizaciones" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tb_inmunizacion_agripal_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="3dip"
+                    android:paddingStart="6dip"
+                    android:text="A GRIPAL" />
+
+                <TextView
+                    android:id="@+id/tb_inmunizacion_tba_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="3dip"
+                    android:paddingStart="6dip"
+                    android:text="TBA" />
+
+                <TextView
+                    android:id="@+id/tb_inmunizacion_db_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="3dip"
+                    android:paddingStart="6dip"
+                    android:text="DB" />
+
+                <TextView
+                    android:id="@+id/tb_inmunizacion_vhb_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="3dip"
+                    android:paddingStart="6dip"
+                    android:text="VHB" />
+
+            </LinearLayout>
+
         </TableRow>
 
     </TableLayout>

@@ -18,6 +18,16 @@ import com.example.db.entidades.Sereologias;
 
 public class IngresarControl extends AppCompatActivity {
 
+    public static String PREVIA = "PREVIA";
+    public static String NORMAL = "NORMAL";
+    public static String PATOLOGICO = "PATOLOGICO";
+    public static String COLOCADA = "COLOCADA";
+    public static String SOLICITADO = "SOLICITADO";
+    public static String POSITIVO = "POSITIVO";
+    public static String NEGATIVO = "NEGATIVO";
+    public static String SI = "SI";
+    public static String NO = "NO";
+
     // nuevo control
     EditText et_nc_edad_gestacional, et_nc_fecha_control;
     RadioButton rb_nc_ecografia_si, rb_nc_ecografia_no, rb_nc_ecografia_solicitada;
@@ -141,12 +151,12 @@ public class IngresarControl extends AppCompatActivity {
 
     private String solicitado_positivo_negativo_no(boolean solicitado, boolean positivo, boolean negativo){
         if(solicitado)
-            return "SOLICITADO";
+            return SOLICITADO;
         if(positivo)
-            return "POSITIVO";
+            return POSITIVO;
         if(negativo)
-            return "NEGATIVO";
-        return "NO";
+            return NEGATIVO;
+        return NO;
     }
 
 
@@ -216,9 +226,9 @@ public class IngresarControl extends AppCompatActivity {
                 solicitado_positivo_negativo_no(out_rb_nc_chagas_solicitado, out_rb_nc_chagas_positivo, out_rb_nc_chagas_negativo),
                 solicitado_positivo_negativo_no(out_rb_nc_vhb_solicitado, out_rb_nc_vhb_positivo, out_rb_nc_vhb_negativo),
                 solicitado_positivo_negativo_no(out_rb_nc_gas_solicitado, out_rb_nc_gas_positivo, out_rb_nc_gas_negativo),
-                (out_rb_nc_hb_resultado ? str_nc_hb_resultado : (out_rb_nc_hb_solicitado ? "SOLICITADO" : "NO")),
-                (out_rb_nc_glucemia_resultado ? str_nc_glucemia_resultado : (out_rb_nc_glucemia_solicitado ? "SOLICITADO" : "NO")),
-                (out_rb_nc_grupo_resultado ? str_nc_grupo_resultado : (out_rb_nc_grupo_solicitado ? "SOLICITADO" : "NO")),
+                (out_rb_nc_hb_resultado ? str_nc_hb_resultado : (out_rb_nc_hb_solicitado ? SOLICITADO : NO)),
+                (out_rb_nc_glucemia_resultado ? str_nc_glucemia_resultado : (out_rb_nc_glucemia_solicitado ? SOLICITADO : NO)),
+                (out_rb_nc_grupo_resultado ? str_nc_grupo_resultado : (out_rb_nc_grupo_solicitado ? SOLICITADO : NO)),
                 -1
         );
     }
@@ -243,14 +253,14 @@ public class IngresarControl extends AppCompatActivity {
         return new Controles(
                 0,
                 Integer.parseInt(str_nc_edad_gestacional),
-                (out_rb_nc_ecografia_si ? "SI" : (out_rb_nc_ecografia_no ? "NO" : "SOLICITADA")),
+                (out_rb_nc_ecografia_si ? SI : (out_rb_nc_ecografia_no ? NO : SOLICITADO)),
                 (out_rb_nc_hpv_si),
                 (out_rb_nc_pap_si),
                 (out_rb_nc_a_gripal_si),
                 (out_rb_nc_tba_si),
-                (out_rb_nc_db_previa ? "PREVIA" : (out_rb_nc_db_colocada ? "COLOCADA" : "NO")),
-                (out_rb_nc_vhb_previa ? "PREVIA": (out_rb_nc_vhb_colocada ? "COLOCADA" : "NO")),
-                (out_rb_nc_control_clinico_normal ? "NORMAL": "PATOLOGICO"),
+                (out_rb_nc_db_previa ? PREVIA : (out_rb_nc_db_colocada ? COLOCADA : NO)),
+                (out_rb_nc_vhb_previa ? PREVIA : (out_rb_nc_vhb_colocada ? COLOCADA : NO)),
+                (out_rb_nc_control_clinico_normal ? NORMAL : PATOLOGICO),
                 Float.parseFloat(str_et_nc_tension_arterial),
                 str_et_nc_observaciones,
                 id_paciente,
@@ -331,25 +341,25 @@ public class IngresarControl extends AppCompatActivity {
     private void setDatos(Controles control, Sereologias sereologia){
         et_nc_edad_gestacional.setText(String.valueOf(control.edad_gestacional));
         et_nc_fecha_control.setText(control.fecha_control);
-        tres_opciones(rb_nc_ecografia_si, rb_nc_ecografia_no, rb_nc_ecografia_solicitada, control.ecografia.equals("SI"), control.ecografia.equals("NO"));
+        tres_opciones(rb_nc_ecografia_si, rb_nc_ecografia_no, rb_nc_ecografia_solicitada, control.ecografia.equals(SI), control.ecografia.equals(NO));
         dos_opciones(rb_nc_hpv_si, rb_nc_hpv_no, control.hpv);
         dos_opciones(rb_nc_pap_si, rb_nc_pap_no, control.pap);
         dos_opciones(rb_nc_a_gripal_si, rb_nc_a_gripal_no, control.a_gripal);
         dos_opciones(rb_nc_tba_si, rb_nc_tba_no, control.tba_inmunizacion);
-        tres_opciones(rb_nc_db_previa, rb_nc_db_colocada, rb_nc_db_no, control.db_inmunizacion.equals("PREVIA"), control.db_inmunizacion.equals("COLOCADA"));
-        tres_opciones(rb_nc_vhb_previa, rb_nc_vhb_colocada, rb_nc_vhb_no, control.vhb_inmunizacion.equals("PREVIA"), control.vhb_inmunizacion.equals("COLOCADA"));
-        dos_opciones(rb_nc_control_clinico_normal, rb_nc_control_clinico_patologico, control.control_clinico.equals("NORMAL"));
+        tres_opciones(rb_nc_db_previa, rb_nc_db_colocada, rb_nc_db_no, control.db_inmunizacion.equals(PREVIA), control.db_inmunizacion.equals(COLOCADA));
+        tres_opciones(rb_nc_vhb_previa, rb_nc_vhb_colocada, rb_nc_vhb_no, control.vhb_inmunizacion.equals(PREVIA), control.vhb_inmunizacion.equals(COLOCADA));
+        dos_opciones(rb_nc_control_clinico_normal, rb_nc_control_clinico_patologico, control.control_clinico.equals(NORMAL));
         et_nc_tension_arterial.setText(String.valueOf(control.tension_arterial));
         et_nc_observaciones.setText(control.observaciones);
         
-        cuatro_opciones(rb_nc_sifilis_solicitado, rb_nc_sifilis_positivo, rb_nc_sifilis_negativo, rb_nc_sifilis_no, sereologia.sifilis.equals("SOLICITADO"), sereologia.sifilis.equals("POSITIVO"), sereologia.sifilis.equals("NEGATIVO"));
-        cuatro_opciones(rb_nc_hiv_solicitado, rb_nc_hiv_positivo, rb_nc_hiv_negativo, rb_nc_hiv_no, sereologia.hiv.equals("SOLICITADO"), sereologia.hiv.equals("POSITIVO"), sereologia.hiv.equals("NEGATIVO"));
-        cuatro_opciones(rb_nc_chagas_solicitado, rb_nc_chagas_positivo, rb_nc_chagas_negativo, rb_nc_chagas_no, sereologia.chagas.equals("SOLICITADO"), sereologia.chagas.equals("POSITIVO"), sereologia.chagas.equals("NEGATIVO"));
-        cuatro_opciones(rb_nc_vhb_solicitado, rb_nc_vhb_positivo, rb_nc_vhb_negativo, rb_nc_vhb_sereologia_no, sereologia.vhb.equals("SOLICITADO"), sereologia.vhb.equals("POSITIVO"), sereologia.vhb.equals("NEGATIVO"));
-        cuatro_opciones(rb_nc_gas_solicitado, rb_nc_gas_positivo, rb_nc_gas_negativo, rb_nc_gas_no, sereologia.gas.equals("SOLICITADO"), sereologia.gas.equals("NO"), sereologia.gas.equals("NEGATIVO"));
-        tres_opcines_resultado(rb_nc_hb_solicitado, rb_nc_hb_no, rb_nc_hb_resultado,et_nc_hb_resultado, sereologia.hb.equals("SOLICITADO"), sereologia.hb.equals("NO"), sereologia.hb);
-        tres_opcines_resultado(rb_nc_glucemia_solicitado, rb_nc_glucemia_no, rb_nc_glucemia_resultado,et_nc_glucemia_resultado, sereologia.glucemia.equals("SOLICITADO"), sereologia.glucemia.equals("NO"), sereologia.glucemia);
-        tres_opcines_resultado(rb_nc_grupo_solicitado, rb_nc_grupo_no, rb_nc_grupo_resultado,et_nc_grupo_resultado, sereologia.grupo_factor.equals("SOLICITADO"), sereologia.grupo_factor.equals("NO"), sereologia.grupo_factor);
+        cuatro_opciones(rb_nc_sifilis_solicitado, rb_nc_sifilis_positivo, rb_nc_sifilis_negativo, rb_nc_sifilis_no, sereologia.sifilis.equals(SOLICITADO), sereologia.sifilis.equals(POSITIVO), sereologia.sifilis.equals(NEGATIVO));
+        cuatro_opciones(rb_nc_hiv_solicitado, rb_nc_hiv_positivo, rb_nc_hiv_negativo, rb_nc_hiv_no, sereologia.hiv.equals(SOLICITADO), sereologia.hiv.equals(POSITIVO), sereologia.hiv.equals(NEGATIVO));
+        cuatro_opciones(rb_nc_chagas_solicitado, rb_nc_chagas_positivo, rb_nc_chagas_negativo, rb_nc_chagas_no, sereologia.chagas.equals(SOLICITADO), sereologia.chagas.equals(POSITIVO), sereologia.chagas.equals(NEGATIVO));
+        cuatro_opciones(rb_nc_vhb_solicitado, rb_nc_vhb_positivo, rb_nc_vhb_negativo, rb_nc_vhb_sereologia_no, sereologia.vhb.equals(SOLICITADO), sereologia.vhb.equals(POSITIVO), sereologia.vhb.equals(NEGATIVO));
+        cuatro_opciones(rb_nc_gas_solicitado, rb_nc_gas_positivo, rb_nc_gas_negativo, rb_nc_gas_no, sereologia.gas.equals(SOLICITADO), sereologia.gas.equals(NO), sereologia.gas.equals(NEGATIVO));
+        tres_opcines_resultado(rb_nc_hb_solicitado, rb_nc_hb_no, rb_nc_hb_resultado,et_nc_hb_resultado, sereologia.hb.equals(SOLICITADO), sereologia.hb.equals(NO), sereologia.hb);
+        tres_opcines_resultado(rb_nc_glucemia_solicitado, rb_nc_glucemia_no, rb_nc_glucemia_resultado,et_nc_glucemia_resultado, sereologia.glucemia.equals(SOLICITADO), sereologia.glucemia.equals(NO), sereologia.glucemia);
+        tres_opcines_resultado(rb_nc_grupo_solicitado, rb_nc_grupo_no, rb_nc_grupo_resultado,et_nc_grupo_resultado, sereologia.grupo_factor.equals(SOLICITADO), sereologia.grupo_factor.equals(NO), sereologia.grupo_factor);
 
     }
 

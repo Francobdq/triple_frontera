@@ -1,5 +1,7 @@
 package com.example.db.entidades;
 
+import com.example.triple_frontera.IngresarControl;
+
 public class Controles {
     public int id;
     public int edad_gestacional;
@@ -63,6 +65,14 @@ public class Controles {
     // porque la observacion puede ser nula
     public Controles(int id, int edad_gestacional, String ecografia, int hpv, int pap, int a_gripal, int tba_inmunizacion, String db_inmunizacion, String vhb_inmunizacion, String control_clinico, float tension_arterial, int id_paciente_control_fk, String fecha_control) {
         Inicializar(id, edad_gestacional, ecografia, hpv, pap, a_gripal, tba_inmunizacion, db_inmunizacion, vhb_inmunizacion, control_clinico, tension_arterial, "", id_paciente_control_fk, fecha_control);
+    }
+
+    public boolean inmunizacion_db() {
+        return db_inmunizacion.equals(IngresarControl.PREVIA) || db_inmunizacion.equals(IngresarControl.COLOCADA);
+    }
+
+    public boolean inmunizacion_vhb() {
+        return vhb_inmunizacion.equals(IngresarControl.PREVIA) || db_inmunizacion.equals(IngresarControl.COLOCADA);
     }
 
 }

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.OnLifecycleEvent;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
@@ -27,12 +29,11 @@ import android.widget.Toast;
 
 import com.example.db.DbHelper;
 import com.example.db.entidades.*;
+import com.example.iu.DatePickerFragment;
 
 import org.w3c.dom.Text;
 
 import java.util.List;
-
-import javax.crypto.Mac;
 
 public class Ingresar_embarazada extends AppCompatActivity {
 
@@ -241,6 +242,39 @@ public class Ingresar_embarazada extends AppCompatActivity {
         Spinner controles = (Spinner) findViewById(R.id.sp_edit_controles);
         sp_control = new SpinnerControl(controles,Ingresar_embarazada.this);
 
+        fecha_de_nacimiento.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                showDatePickerDialog(fecha_de_nacimiento);
+            }
+        });
+
+        ultimo_parto.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                showDatePickerDialog(ultimo_parto);
+            }
+        });
+
+        ultima_menstruacion.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                showDatePickerDialog(ultima_menstruacion);
+            }
+        });
+
+        parto_estimado.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                showDatePickerDialog(parto_estimado);
+            }
+        });
+
+
         ultima_menstruacion.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -283,7 +317,18 @@ public class Ingresar_embarazada extends AppCompatActivity {
     }
 
 
+    private void showDatePickerDialog(EditText et) {
+        DatePickerFragment newFragment = DatePickerFragment.newInstance(new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                // +1 because January is zero
+                final String selectedDate = day + " / " + (month+1) + " / " + year;
+                et.setText(selectedDate);
+            }
+        });
 
+        newFragment.show(getSupportFragmentManager(), "datePicker");
+    }
 
 
 

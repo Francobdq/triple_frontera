@@ -35,28 +35,56 @@ public class Antecedentes {
 
 
     // es puerpera si la fecha actual es mayor a la fecha de parto estimado
-    public static String es_puerpera(int dia, int mes, int anio){
+    public String es_puerpera(int dia, int mes, int anio){
         int[] fecha_ultimo_parto = format_fecha(parto_estimado);
+        int dia_parto_estimado = fecha_ultimo_parto[0];
+        int mes_parto_estimado = fecha_ultimo_parto[1];
+        int anio_parto_estimado = fecha_ultimo_parto[2];
+
+        if(anio > anio_parto_estimado)
+            return "PUERPERA";
+
+        if(anio == anio_parto_estimado){
+            if(mes > mes_parto_estimado)
+                return "PUERPERA";
+            if(mes == mes_parto_estimado){
+                if(dia > dia_parto_estimado)
+                    return "PUERPERA";
+            }
+        }
+
+        return "EMBARAZADA.";
     }
 
     public static int[] format_fecha(String fecha){
+        // borro los espacios
+        fecha = fecha.replace(" ", "");
         // le hago un format al texto para separar, dia mes y anio (dd/MM/yyyy)
         String[] fecha_separada = fecha.split("/");
+        // borro los espacios
+
         String str_parto_estimado = "--/--/----";
 
         int[] out = {-1,-1,-1};
 
+
         // verifico que sea correcto
         if(fecha_separada.length == 3){
+            if(fecha_separada[0].length() == 1)
+                fecha_separada[0] = "0"+fecha_separada[0];
+            if(fecha_separada[1].length() == 1)
+                fecha_separada[1] = "0"+fecha_separada[1];
+
+
             // verifico que el dia sea correcto
-            if(fecha_separada[0].length() == 2){
+            if(fecha_separada[0].length()  == 2){
                 // verifico que el mes sea correcto
                 if(fecha_separada[1].length() == 2){
                     // verifico que el anio sea correcto
                     if(fecha_separada[2].length() == 4){
                         // hago un parseint de todo y me aseguro que si hay un string que no sea un numero, le asigno cero como su valor
                         int dia = Integer.parseInt(fecha_separada[0]);
-                        int mes = Integer.parseInt(fecha_separada[1]); 
+                        int mes = Integer.parseInt(fecha_separada[1]);
                         int anio = Integer.parseInt(fecha_separada[2]);
 
                         if(mes <= 12 && mes >= 1){
