@@ -498,7 +498,7 @@
                 android:id="@+id/di_nombre_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Rogelia" />
+                android:text="-" />
         </TableRow>
 
         <TableRow
@@ -515,7 +515,7 @@
                 android:id="@+id/di_apellidos_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Maza" />
+                android:text="-" />
         </TableRow>
 
         <TableRow
@@ -532,7 +532,7 @@
                 android:id="@+id/di_documento_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="39538456" />
+                android:text="-" />
         </TableRow>
 
         <TableRow
@@ -549,8 +549,19 @@
                 android:id="@+id/di_fecha_de_nacimiento_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="07/10/1985 (35 años)" />
+                android:text="-" />
         </TableRow>
     </TableLayout>
+
+    <ImageButton
+        android:id="@+id/addButton_listado"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:onClick="nuevaEmbarazada"
+        app:layout_constraintEnd_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_input_add" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

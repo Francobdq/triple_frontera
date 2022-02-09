@@ -4,7 +4,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.service.controls.Control;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -15,6 +17,8 @@ import android.widget.Toast;
 import com.example.db.DbHelper;
 import com.example.db.entidades.Controles;
 import com.example.db.entidades.Sereologias;
+import com.example.iu.AlertsManager;
+import com.example.iu.DatePickerManager;
 
 public class IngresarControl extends AppCompatActivity {
 
@@ -43,6 +47,7 @@ public class IngresarControl extends AppCompatActivity {
 
     int id_paciente;
     Context ctx;
+    AppCompatActivity act;
 
     View control_view;
 
@@ -51,26 +56,43 @@ public class IngresarControl extends AppCompatActivity {
     int id_control = -1;
     boolean editable;
 
+    DatePickerManager dp_manager;
 
-    public IngresarControl(Context ctx, int id_paciente, LayoutInflater inflater, boolean editable) {
+    public IngresarControl(Context ctx, int id_paciente, LayoutInflater inflater, boolean editable, AppCompatActivity act) {
         this.ctx = ctx;
         this.id_paciente = id_paciente;
         this.inflater = inflater;
         this.editable = editable;
+        this.act = act;
+
+
         abrirDialogControles();
     }
 
 
     public void abrirDialogControles(){
-        AlertDialog.Builder alert = new AlertDialog.Builder(ctx, android.R.style.Theme_Material_Dialog_Alert);
-
+        IngresarControl  acts = this;
+        //Context ctxx = IngresarControl.this;
+        AlertDialog.Builder alert = new AlertDialog.Builder(ctx, android.R.style.Theme_Material_Dialog_Alert)
+                .setOnKeyListener(new DialogInterface.OnKeyListener() {
+                    @Override
+                    public boolean onKey (DialogInterface dialog, int keyCode, KeyEvent event) {
+                        if (keyCode == KeyEvent.KEYCODE_BACK &&
+                                event.getAction() == KeyEvent.ACTION_UP &&
+                                !event.isCanceled()) {
+                            AlertsManager.ConfirmarSalida(ctx, dialog);
+                            return true;
+                        }
+                        return false;
+                    }
+                });
         control_view = inflater.inflate(R.layout.control_dialog,null);
-
 
         alert.setView(control_view);
 
         AlertDialog dialog = alert.create();
         dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(false);
         dialog.show();
 
     }
@@ -80,6 +102,8 @@ public class IngresarControl extends AppCompatActivity {
 
         et_nc_edad_gestacional = (EditText)control_view.findViewById(R.id.et_nc_edad_gestacional);
         et_nc_fecha_control = (EditText)control_view.findViewById(R.id.et_nc_fecha_control);
+        dp_manager = new DatePickerManager();
+        dp_manager.addListener(et_nc_fecha_control, this.act);
         // rb [si, no, solicitada]: ecografia
 
         rb_nc_ecografia_si = (RadioButton)control_view.findViewById(R.id.rb_nc_ecografia_si);
@@ -446,6 +470,7 @@ public class IngresarControl extends AppCompatActivity {
         sereologias.id_control_fk = id_control;
         db.UpdateSereologia(db.getAllSereologiaFromControles(id_control).id, sereologias);
 
+
     }
 
     private void guardarControlNuevo(DbHelper db, Sereologias sereologias, Controles control){
@@ -493,8 +518,6 @@ public class IngresarControl extends AppCompatActivity {
         Toast.makeText(ctx, "Datos guardados correctamente.", Toast.LENGTH_SHORT).show();
 
     }
-
-
 
 
 

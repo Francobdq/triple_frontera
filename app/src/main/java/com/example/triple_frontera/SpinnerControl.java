@@ -26,21 +26,20 @@ public class SpinnerControl {
     public void cargarDatosEnSpinner(List<Controles> controles){
         id_controles = new int[controles.size()];
 
-        // ahora cargo los controles en el spinner
-        if (controles.size() > 0){
             // cargo el spinner
             String[] nombres_controles = new String[controles.size()];
 
             for (int i = 0; i < controles.size(); i++){
-                nombres_controles[i] = controles.get(i).fecha_control;
-                id_controles[i] = controles.get(i).id;
+                nombres_controles[controles.size()-1-i] = controles.get(i).fecha_control;
+                System.out.println(nombres_controles[controles.size()-1-i]);
+                id_controles[controles.size()-1-i] = controles.get(i).id;
             }
 
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(ctx, android.R.layout.simple_spinner_item, nombres_controles);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             sp_controles.setAdapter(adapter);
             sp_controles.setSelection(controles.size()-1);
-        }
+
     }
 
 

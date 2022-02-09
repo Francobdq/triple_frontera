@@ -6,6 +6,7 @@ import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.OnLifecycleEvent;
 
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -29,7 +30,9 @@ import android.widget.Toast;
 
 import com.example.db.DbHelper;
 import com.example.db.entidades.*;
+import com.example.iu.AlertsManager;
 import com.example.iu.DatePickerFragment;
+import com.example.iu.DatePickerManager;
 
 import org.w3c.dom.Text;
 
@@ -77,6 +80,8 @@ public class Ingresar_embarazada extends AppCompatActivity {
     IngresarControl ingresarControl;
 
     SpinnerControl sp_control;
+
+    DatePickerManager dp_manager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -242,37 +247,12 @@ public class Ingresar_embarazada extends AppCompatActivity {
         Spinner controles = (Spinner) findViewById(R.id.sp_edit_controles);
         sp_control = new SpinnerControl(controles,Ingresar_embarazada.this);
 
-        fecha_de_nacimiento.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
-                showDatePickerDialog(fecha_de_nacimiento);
-            }
-        });
-
-        ultimo_parto.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                showDatePickerDialog(ultimo_parto);
-            }
-        });
-
-        ultima_menstruacion.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                showDatePickerDialog(ultima_menstruacion);
-            }
-        });
-
-        parto_estimado.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                showDatePickerDialog(parto_estimado);
-            }
-        });
+        dp_manager = new DatePickerManager();
+        dp_manager.addListener(fecha_de_nacimiento, this);
+        dp_manager.addListener(ultimo_parto, this);
+        dp_manager.addListener(ultima_menstruacion, this);
+        dp_manager.addListener(parto_estimado, this);
 
 
         ultima_menstruacion.addTextChangedListener(new TextWatcher() {
@@ -316,22 +296,6 @@ public class Ingresar_embarazada extends AppCompatActivity {
 
     }
 
-
-    private void showDatePickerDialog(EditText et) {
-        DatePickerFragment newFragment = DatePickerFragment.newInstance(new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                // +1 because January is zero
-                final String selectedDate = day + " / " + (month+1) + " / " + year;
-                et.setText(selectedDate);
-            }
-        });
-
-        newFragment.show(getSupportFragmentManager(), "datePicker");
-    }
-
-
-
     private Mac_previo obtenerDatosMAC(){
         boolean b_implante = cb_implante.isChecked();
         boolean b_diu =  cb_diu.isChecked();
@@ -366,7 +330,7 @@ public class Ingresar_embarazada extends AppCompatActivity {
         String str_ultima_menstruacion = ultima_menstruacion.getText().toString();
         String str_parto_estimado = parto_estimado.getText().toString();
 
-        String[] control = {str_edad_primer_parto, str_gestaciones, str_partos, str_cesareas, str_abortos,
+        String[] control = {str_gestaciones, str_partos, str_cesareas, str_abortos,
         str_ultimo_parto, str_ultima_menstruacion, str_parto_estimado};
 
         boolean embarazo_planificado_si = rb_embarazo_planificado_si.isChecked();
@@ -377,6 +341,9 @@ public class Ingresar_embarazada extends AppCompatActivity {
                 return null;
             }
         }
+
+        if(str_edad_primer_parto.equals(""))
+            str_edad_primer_parto = "-1";
 
         return new Antecedentes(0, Integer.parseInt(str_edad_primer_parto),Integer.parseInt(str_gestaciones),
                 Integer.parseInt(str_edad_primer_parto),Integer.parseInt(str_cesareas), Integer.parseInt(str_abortos),embarazo_planificado_si,
@@ -432,7 +399,7 @@ q       */
             return;
         }
         LayoutInflater inflater = getLayoutInflater();
-        ingresarControl = new IngresarControl(Ingresar_embarazada.this, id_paciente, inflater, editable);
+        ingresarControl = new IngresarControl(Ingresar_embarazada.this, id_paciente, inflater, editable, this);
     }
 
 
@@ -443,6 +410,10 @@ q       */
         }
         ingresarControl.guardar();
         sp_control.actualizarDatosControlDB(id_paciente);
+    }
+
+    public void retroceder(View view){
+        onBackPressed();
     }
 
 
@@ -474,7 +445,8 @@ q       */
         nacionalidad.setSelection(Localizacion.getIndex(nacionalidad, paciente.nacionalidad));
 
         // ahora cargo los datos de los antecedentes
-        edad_primer_parto.setText(String.valueOf(antecedente.edad_primer_parto));
+        int valor = antecedente.edad_primer_parto;
+        edad_primer_parto.setText((valor == 0 || valor == -1) ? "" : String.valueOf(valor));
         gestaciones.setText(String.valueOf(antecedente.gestaciones));
         partos.setText(String.valueOf(antecedente.partos));
         cesareas.setText(String.valueOf(antecedente.ceseareas));
@@ -562,7 +534,7 @@ q       */
         }
 
         LayoutInflater inflater = getLayoutInflater();
-        ingresarControl = new IngresarControl(Ingresar_embarazada.this, id_paciente, inflater, editable);
+        ingresarControl = new IngresarControl(Ingresar_embarazada.this, id_paciente, inflater, editable, this);
 
         // obtengo el index de la seleccion actual del spinner controles
         int index = sp_control.indexSelectedItem();
@@ -641,5 +613,12 @@ q       */
             id_paciente = db.getLastInsertedId();
         }
         Toast.makeText(this, "Datos guardados correctamente.", Toast.LENGTH_SHORT).show();
+    }
+
+
+    @Override
+    public void onBackPressed()
+    {
+        AlertsManager.ConfirmarSalida(Ingresar_embarazada.this, this);
     }
 }

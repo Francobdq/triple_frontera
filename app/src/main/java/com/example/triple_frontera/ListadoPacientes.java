@@ -158,6 +158,12 @@ public class ListadoPacientes extends AppCompatActivity {
         ListadoPacientes.this.startActivity(myIntent);
     }
 
+    private void irAEmbarazada(){
+        Intent myIntent = new Intent(ListadoPacientes.this, Ingresar_embarazada.class);
+        myIntent.putExtra("editable", true);
+        ListadoPacientes.this.startActivity(myIntent);
+    }
+
     public void editarEmbarazada(View view){
         irAEmbarazada(true);
     }
@@ -165,6 +171,8 @@ public class ListadoPacientes extends AppCompatActivity {
     public void verEmbarazada(View view){
         irAEmbarazada(false);
     }
+
+    public void nuevaEmbarazada(View view){irAEmbarazada();}
 
     private void listaPacientes(){
         ArrayAdapter adapter= new ArrayAdapter(this,R.layout.list_item,R.id.text,pacientes);
@@ -190,6 +198,8 @@ public class ListadoPacientes extends AppCompatActivity {
     }
 
     private void seleccionItemLista(){
+        // selecciono el primer item por defecto
+        list_pacientes.setSelection(0);
         list_pacientes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -216,6 +226,8 @@ public class ListadoPacientes extends AppCompatActivity {
                 // cierro la base de datos
                 db.close();
             }   
+
+            
         });
     }
 

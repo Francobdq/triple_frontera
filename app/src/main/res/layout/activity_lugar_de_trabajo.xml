@@ -22,12 +22,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
-            android:text="País" />
+            android:text="País"
+            android:textColor="@color/rojo_principal" />
 
         <Spinner
             android:id="@+id/spinner_pais"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/rojo_principal"
             android:minHeight="48dp"
             tools:ignore="SpeakableTextPresentCheck" />
 
@@ -36,12 +38,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:text="Area operativa" />
+            android:text="Area operativa"
+            android:textColor="@color/rojo_principal" />
 
         <Spinner
             android:id="@+id/spinner_area_operativa"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/rojo_principal"
             android:minHeight="48dp" />
 
         <TextView
@@ -49,12 +53,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:text="Paraje" />
+            android:text="Paraje"
+            android:textColor="@color/rojo_principal" />
 
         <Spinner
             android:id="@+id/spinner_paraje"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/rojo_principal"
             android:minHeight="48dp"
             tools:ignore="SpeakableTextPresentCheck" />
 
@@ -72,13 +78,13 @@
         android:id="@+id/elegir_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
         android:layout_marginBottom="20dp"
         android:text="Seleccione lugar de trabajo"
         android:textAlignment="textEnd"
         android:textSize="24dp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="@+id/linearLayout"
+        app:layout_constraintStart_toStartOf="@+id/linearLayout" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

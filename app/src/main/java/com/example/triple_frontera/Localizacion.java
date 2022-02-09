@@ -38,6 +38,8 @@ public class Localizacion {
 
     private Context ctx;
 
+    boolean primeravez_pais = false;
+
     public Localizacion(Context ctx, Spinner pais, Spinner area_operativa, Spinner paraje) {
         this.ctx = ctx;
         this.pais = pais;
@@ -82,6 +84,7 @@ public class Localizacion {
         id_area_operativa = id_areas_operativas[posicion];
         System.out.println("------------------------------------------------");
         System.out.println(id_area_operativa + "-" + area_operativa.getItemAtPosition(posicion).toString());
+
         ActualizarSpinner(TIPO_PARAJE, id_area_operativa);
     }
 
@@ -89,6 +92,35 @@ public class Localizacion {
         id_paraje = id_parajes[posicion];
         System.out.println("------------------------------------------------");
         System.out.println(id_paraje + "-" + paraje.getItemAtPosition(posicion).toString());
+    }
+
+
+    private AdapterView.OnItemSelectedListener ListenerSpinners(int tipo){
+        return new AdapterView.OnItemSelectedListener() {
+
+            public void onItemSelected(AdapterView<?> spn, android.view.View v, int posicion, long id) {
+                System.out.println("se selecciono el spinner.");
+                System.out.println("Has seleccionado " + spn.getItemAtPosition(posicion).toString());
+                
+                if(primeravez_pais){
+                    primeravez_pais = false;
+                    return;
+                }
+
+                if(id_paises != null && tipo == TIPO_PAIS){
+                    SeleccionoPais(posicion);
+                }
+                else if(id_areas_operativas != null && tipo == TIPO_AREA_OPERATIVA){
+                    SeleccionoAreaOperativa(posicion);
+                }
+                else if(id_parajes != null && tipo == TIPO_PARAJE){
+                    SeleccionoParaje(posicion);
+                }
+
+            }
+            public void onNothingSelected(AdapterView<?> spn) {
+            };
+        };
     }
 
     private void ActualizarSpinner(int tipo, int id){
@@ -112,25 +144,7 @@ public class Localizacion {
 
         ArrayAdapter<String> adapter_datos = new ArrayAdapter<String>(ctx, android.R.layout.simple_spinner_dropdown_item, datos);
         sp.setAdapter(adapter_datos);
-        sp.setOnItemSelectedListener(
-            new AdapterView.OnItemSelectedListener() {
-                
-                public void onItemSelected(AdapterView<?> spn, android.view.View v, int posicion, long id) {
-                    Toast.makeText(spn.getContext(), "Has seleccionado " + spn.getItemAtPosition(posicion).toString(),Toast.LENGTH_LONG).show();
-                    if(id_paises != null && tipo == TIPO_PAIS){
-                        SeleccionoPais(posicion);
-                    }
-                    else if(id_areas_operativas != null && tipo == TIPO_AREA_OPERATIVA){
-                        SeleccionoAreaOperativa(posicion);
-                    }
-                    else{
-                        SeleccionoParaje(posicion);
-                    }
-
-                }
-                public void onNothingSelected(AdapterView<?> spn) {
-                }
-        });
+        sp.setOnItemSelectedListener(ListenerSpinners(tipo));
 
         db.close();
     }
@@ -154,6 +168,13 @@ public class Localizacion {
         System.out.println("pais: " + nombre_pais);
         System.out.println("area operativa: " + nombre_area_operativa);
         System.out.println("paraje: " + nombre_paraje);
+
+        primeravez_pais = true;
+        // saco los listener para que no se actualicen con cada cambio los spinners
+        pais.setOnItemSelectedListener(null);
+        area_operativa.setOnItemSelectedListener(null);
+        paraje.setOnItemSelectedListener(null);
+
 
         if (nombre_pais != null){
             int index = getIndex(pais, nombre_pais);
@@ -187,6 +208,13 @@ public class Localizacion {
                 paraje.setSelection(index);
             }
         }
+
+        // vuelvo a poner los listeners
+        pais.setOnItemSelectedListener(ListenerSpinners(TIPO_PAIS));
+        area_operativa.setOnItemSelectedListener(ListenerSpinners(TIPO_AREA_OPERATIVA));
+        paraje.setOnItemSelectedListener(ListenerSpinners(TIPO_PARAJE));
+        
+        
     }
 
     public void makeEditable(boolean editable){

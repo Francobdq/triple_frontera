@@ -371,10 +371,13 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:ems="10"
-                    android:inputType="datetime"
+                    android:inputType="date"
+                    android:focusable="false"
+                    android:clickable="true"
                     android:minHeight="48dp"
                     app:layout_constraintStart_toStartOf="@+id/tv_fecha_control"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_fecha_control" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_fecha_control"
+                    tools:ignore="SpeakableTextPresentCheck" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
     </ScrollView>

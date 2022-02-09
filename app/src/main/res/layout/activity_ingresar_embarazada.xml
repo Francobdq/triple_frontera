@@ -12,10 +12,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
-        android:minHeight="48dp"
-        android:inputType="date"
-        android:focusable="false"
         android:clickable="true"
+        android:focusable="false"
+        android:inputType="date"
+        android:minHeight="48dp"
+        android:onClick="retroceder"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/abc_vector_test"
@@ -59,7 +60,8 @@
                 android:id="@+id/textView3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Nombre" />
+                android:text="Nombre"
+                android:textColor="@color/rojo_principal" />
 
             <EditText
                 android:id="@+id/et_nombre"
@@ -77,7 +79,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="Apellido" />
+                android:text="Apellido"
+                android:textColor="@color/rojo_principal" />
 
             <EditText
                 android:id="@+id/et_apellido"
@@ -95,7 +98,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="Documento" />
+                android:text="Documento"
+                android:textColor="@color/rojo_principal" />
 
             <EditText
                 android:id="@+id/et_documento"
@@ -113,7 +117,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="Fecha de Nacimiento" />
+                android:text="Fecha de Nacimiento"
+                android:textColor="@color/rojo_principal" />
 
             <EditText
                 android:id="@+id/et_fecha_de_nacimiento"
@@ -133,7 +138,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="Origen" />
+                android:text="Origen"
+                android:textColor="@color/rojo_principal" />
 
             <Spinner
                 android:id="@+id/sp_origen"
@@ -149,7 +155,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Nacionalidad" />
+                android:text="Nacionalidad"
+                android:textColor="@color/rojo_principal" />
 
             <Spinner
                 android:id="@+id/sp_nacionalidad"
@@ -165,7 +172,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="País" />
+                android:text="País"
+                android:textColor="@color/rojo_principal" />
 
             <Spinner
                 android:id="@+id/sp_pais"
@@ -181,7 +189,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Area Operativa" />
+                android:text="Area Operativa"
+                android:textColor="@color/rojo_principal" />
 
             <Spinner
                 android:id="@+id/sp_area_operativa"
@@ -197,7 +206,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Paraje" />
+                android:text="Paraje"
+                android:textColor="@color/rojo_principal" />
 
             <Spinner
                 android:id="@+id/sp_paraje"
@@ -210,7 +220,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Número de vivienda" />
+                android:text="Número de vivienda"
+                android:textColor="@color/rojo_principal" />
 
             <EditText
                 android:id="@+id/et_numero_de_vivienda"
@@ -298,6 +309,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Partos"
+                    android:textColor="@color/rojo_principal"
                     app:layout_constraintStart_toStartOf="@+id/et_partos"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -306,6 +318,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Gestaciones"
+                    android:textColor="@color/rojo_principal"
                     app:layout_constraintStart_toStartOf="@+id/et_gestaciones"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -327,6 +340,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Edad 1er parto"
+                    android:textColor="@color/rojo_principal"
                     app:layout_constraintStart_toStartOf="@+id/et_edad_primer_parto"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -363,6 +377,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:text="Cesáreas"
+                    android:textColor="@color/rojo_principal"
                     app:layout_constraintStart_toStartOf="@+id/et_edad_primer_parto"
                     app:layout_constraintTop_toBottomOf="@+id/et_edad_primer_parto" />
 
@@ -372,6 +387,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:text="Abortos"
+                    android:textColor="@color/rojo_principal"
                     app:layout_constraintStart_toStartOf="@+id/et_gestaciones"
                     app:layout_constraintTop_toBottomOf="@+id/et_gestaciones" />
 
@@ -394,6 +410,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:text="Embarazo Planificado"
+                    android:textColor="@color/rojo_principal"
                     app:layout_constraintStart_toStartOf="@+id/et_partos"
                     app:layout_constraintTop_toBottomOf="@+id/et_partos" />
 
@@ -441,6 +458,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:text="Ult. Parto"
+                    android:textColor="@color/rojo_principal"
                     app:layout_constraintStart_toStartOf="@+id/et_cesareas"
                     app:layout_constraintTop_toBottomOf="@+id/et_cesareas" />
 
@@ -464,6 +482,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:text="Ult. Menstruación"
+                    android:textColor="@color/rojo_principal"
                     app:layout_constraintStart_toStartOf="@+id/et_abortos"
                     app:layout_constraintTop_toBottomOf="@+id/et_abortos" />
 
@@ -473,6 +492,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:text="Parto Estimado"
+                    android:textColor="@color/rojo_principal"
                     app:layout_constraintStart_toStartOf="@+id/radioGroup"
                     app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
 
@@ -481,7 +501,9 @@
                     android:layout_width="180dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
+                    android:clickable="true"
                     android:ems="10"
+                    android:focusable="false"
                     android:inputType="date"
                     android:minHeight="48dp"
                     app:layout_constraintStart_toStartOf="@+id/textView23"
@@ -494,6 +516,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:text="MAC Previo"
+                    android:textColor="@color/rojo_principal"
                     app:layout_constraintStart_toStartOf="@+id/et_ultimo_parto"
                     app:layout_constraintTop_toBottomOf="@+id/et_ultimo_parto" />
 
@@ -563,6 +586,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:text="APP"
+                    android:textColor="@color/rojo_principal"
                     app:layout_constraintStart_toStartOf="@+id/et_ultima_menstruacion"
                     app:layout_constraintTop_toBottomOf="@+id/et_ultima_menstruacion" />
 
@@ -655,6 +679,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:text="Controles"
+                    android:textColor="@color/rojo_principal"
                     app:layout_constraintStart_toStartOf="@+id/linearLayout3"
                     app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
 
@@ -665,6 +690,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="12dp"
                     android:text="Hijos"
+                    android:textColor="@color/rojo_principal"
                     app:layout_constraintStart_toEndOf="@+id/ib_add_control"
                     app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
 
